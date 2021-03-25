@@ -147,14 +147,14 @@ app.get('/applicants', async (req,res) => {
 app.get('/technician', async (req,res) => {
     let pwd = "1234567812345678"
     let hashedPwd = await bcyrpt.hash(pwd, saltRounds);   
-    let sqlInsert = "INSERT INTO technician (fdm_id, pwd) VALUES ('fdm6','1234567812345678')";
+    let sqlInsert = "INSERT INTO technician (fdm_id, pwd) VALUES ('fdm6',?)";
     conn.query(sqlInsert, hashedPwd, (err, result) =>{
         if (err) throw err;
     });
 
     pwd = "1234567887654321"
     hashedPwd = await bcyrpt.hash(pwd, saltRounds);   
-    sqlInsert = "INSERT INTO technician (fdm_id, pwd) VALUES ('fdm7','1234567887654321')";
+    sqlInsert = "INSERT INTO technician (fdm_id, pwd) VALUES ('fdm7',?)";
     conn.query(sqlInsert, hashedPwd, (err, result) =>{
         if (err) throw err;   
         res.send("Technicians Inserted - check your table")

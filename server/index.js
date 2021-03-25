@@ -164,6 +164,7 @@ app.get('/api/get/mentor/mentees/:id', (req,res) =>{
         res.send(result);
     });
 });
+
 /****************************** Routes used to delete data ******************************/
 
 // Route Definition: Deletes an entry from the application table
@@ -265,6 +266,36 @@ app.post('/api/insert/areas-of-improvement', (req,res) => {
         if (err) res.send(err);
         console.log(result);
         res.send(result);
+    });
+});
+
+// Route Definition: Returns true if the credentials exist in the mentee table
+app.post('/api/get/mentee/credentials-check', async (req,res) =>{
+    const sql = "SELECT pwd FROM mentee WHERE fdm_email = ?";
+    conn.query(sql, req.body.fdmEmail, async (err, result) => {
+        if (err) res.send(err);
+        let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
+        res.send({match:match})
+    });
+});
+
+// Route Definition: Returns true if the credentials exist in the mentor table
+app.post('/api/get/mentor/credentials-check', async (req,res) =>{
+    const sql = "SELECT pwd FROM mentor WHERE fdm_id = ?";
+    conn.query(sql, req.body.fdmEmail, async (err, result) => {
+        if (err) res.send(err);
+        let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
+        res.send({match:match})
+    });
+});
+
+// Route Definition: Returns true if the credentials exist in the technician table
+app.post('/api/get/technician/credentials-check', async (req,res) =>{
+    const sql = "SELECT pwd FROM technician WHERE fdm_id = ?";
+    conn.query(sql, req.body.fdmEmail, async (err, result) => {
+        if (err) res.send(err);
+        let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
+        res.send({match:match})
     });
 });
 
