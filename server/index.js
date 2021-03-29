@@ -52,50 +52,51 @@ app.get('/api/get/applicants/interval=5', (req,res) =>{
     });
 });
 
-// Route Definition: Returns all table entries in the fdm_ids table
-app.get('/api/get/fdm-ids/t=fdm', (req,res) =>{
-    const sql = "SELECT * FROM  fdm_ids";
-    conn.query(sql, (err, result) => {
+
+// Route Definition: Used to check if the passed fdm id exists in the fdm ids table
+app.get('/api/get/fdm-ids/check-exists/:id', (req,res) =>{
+    const sql = "SELECT fdm_id FROM fdm_ids WHERE fdm_id = ?";
+    conn.query(sql, req.params.id, (err, result) => {
         if (err) res.send(err);
         console.log(result);
         res.send(result);
     });
 });
 
-// Route Definition: Returns all fdm ids in the mentor table
-app.get('/api/get/fdm-ids/t=mentor', (req,res) =>{
-    const sql = "SELECT fdm_id FROM  mentor";
-    conn.query(sql, (err, result) => {
+// Route Definition: Used to check if the passed fdm id exists in the mentor table
+app.get('/api/get/mentor/check-exists/:id', (req,res) =>{
+    const sql = "SELECT fdm_id FROM mentor WHERE fdm_id = ?";
+    conn.query(sql, req.params.id, (err, result) => {
         if (err) res.send(err);
         console.log(result);
         res.send(result);
     });
 });
 
-// Route Definition: Returns all fdm ids in the mentor application table
-app.get('/api/get/fdm-ids/t=application', (req,res) =>{
-    const sql = "SELECT fdm_id FROM  mentor_application";
-    conn.query(sql, (err, result) => {
+// Route Definition: Used to check if the passed fdm id exists in the mentor application table
+app.get('/api/get/applicants/check-exists/:id', (req,res) =>{
+    const sql = "SELECT fdm_id FROM mentor_application WHERE fdm_id = ?";
+    conn.query(sql, req.params.id, (err, result) => {
         if (err) res.send(err);
         console.log(result);
         res.send(result);
     });
 });
 
-// Route Definition: Returns all fdm emails in the fdm email table
-app.get('/api/get/fdm-emails/t=fdm', (req,res) =>{
-    const sql = "SELECT fdm_email FROM  fdm_emails";
-    conn.query(sql, (err, result) => {
+// Route Definition: Used to check if the passed fdm email exists in the fdm emails table
+app.get('/api/get/fdm-emails/check-exists/:fdmEmail', (req,res) =>{
+    const sql = "SELECT fdm_email FROM fdm_emails WHERE fdm_email = ?";
+    conn.query(sql, req.params.fdmEmail, (err, result) => {
         if (err) res.send(err);
         console.log(result);
         res.send(result);
     });
 });
 
-// Route Definition: Returns all fdm emails in the mentee table
-app.get('/api/get/fdm-emails/t=mentee', (req,res) =>{
-    const sql = "SELECT fdm_email FROM  mentee";
-    conn.query(sql, (err, result) => {
+// Route Definition: Used to check if the passed fdm email exists in the mentee table
+app.get('/api/get/mentee/check-exists/:fdmEmail', (req,res) =>{
+    const sql = "SELECT fdm_email FROM mentee WHERE fdm_email = ?";
+    conn.query(sql, req.params.fdmEmail, (err, result) => {
         if (err) res.send(err);
         console.log(result);
         res.send(result);
@@ -165,6 +166,7 @@ app.get('/api/get/mentor/mentees/:id', (req,res) =>{
     });
 });
 
+
 /****************************** Routes used to delete data ******************************/
 
 // Route Definition: Deletes an entry from the application table
@@ -177,6 +179,7 @@ app.delete('/api/delete/application/:id', (req,res) => {
     });
 });
 
+
 /****************************** Routes used to update data ******************************/
 // Route Definition: Updates an entry from the mentee table to set the mentor id to point to a mentor entry 
 app.put('/api/update/mentee/mentor-id', (req,res) =>{
@@ -187,6 +190,8 @@ app.put('/api/update/mentee/mentor-id', (req,res) =>{
         res.send(result)
     });
 });
+
+
 /****************************** Routes used to create data ******************************/
 
 // Route Definition: Inserts a new mentor entry using an existing application entry
@@ -274,41 +279,42 @@ app.post('/api/get/mentee/credentials-check', async (req,res) =>{
     const sql = "SELECT pwd FROM mentee WHERE fdm_email = ?";
     conn.query(sql, req.body.fdmEmail, async (err, result) => {
         if (err) res.send(err);
-        let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
-        res.send({match:match})
+        if (result.length === 0){
+            res.send({match:false})
+        }
+        else{
+            let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
+            res.send({match:match})
+        }
     });
 });
 
 // Route Definition: Returns true if the credentials exist in the mentor table
 app.post('/api/get/mentor/credentials-check', async (req,res) =>{
     const sql = "SELECT pwd FROM mentor WHERE fdm_id = ?";
-    conn.query(sql, req.body.fdmEmail, async (err, result) => {
+    conn.query(sql, req.body.id, async (err, result) => {
         if (err) res.send(err);
-        let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
-        res.send({match:match})
+        if (result.length === 0){
+            res.send({match:false})
+        }
+        else{
+            let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
+            res.send({match:match})
+        }
     });
 });
 
 // Route Definition: Returns true if the credentials exist in the technician table
 app.post('/api/get/technician/credentials-check', async (req,res) =>{
     const sql = "SELECT pwd FROM technician WHERE fdm_id = ?";
-    conn.query(sql, req.body.fdmEmail, async (err, result) => {
+    conn.query(sql, req.body.id, async (err, result) => {
         if (err) res.send(err);
-        let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
-        res.send({match:match})
-    });
-});
-
-/*-------------------------------------------------- Test Route ------------------------------------------*/
-app.post('/api/test', async (req,res) => {
-    let pwd = req.body.pwd;
-    console.log(pwd)
-    let id = req.body.id;
-    console.log(id)
-    let sql = "SELECT * FROM mentor_application WHERE fdm_id = ?"
-    conn.query(sql, id, async (err, result) => {
-        if (err) throw err;
-        let matched = await bcyrpt.compare(pwd,result[0].pwd)
-        res.send({matched:matched})
+        if (result.length === 0){
+            res.send({match:false})
+        }
+        else{
+            let match = await bcyrpt.compare(req.body.pwd, result[0].pwd);
+            res.send({match:match})
+        }
     });
 });

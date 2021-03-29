@@ -38,14 +38,14 @@ app.get('/fdmIds', (req,res) => {
 app.get('/fdmEmails', (req,res) => {
     let i;
     for (i=1;i<=9;i++){
-        let id = "fdm000"+i.toString();
+        let id = "fdm000"+i.toString()+"@fdm.co.uk";
         let sqlInsert = "INSERT INTO fdm_emails (fdm_email) VALUES (?)";
         conn.query(sqlInsert, id, (err, result) =>{
             if (err) throw err;
         });    
     }
     for (i=1;i<=9;i++){
-        let id = "fdm001"+i.toString();
+        let id = "fdm001"+i.toString()+"@fdm.co.uk";
         let sqlInsert = "INSERT INTO fdm_emails (fdm_email) VALUES (?)";
         conn.query(sqlInsert, id, (err, result) =>{
             if (err) throw err;

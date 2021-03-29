@@ -1,0 +1,31 @@
+#logout-button{
+    background-color: #007bff;
+    border: none;
+    padding: 0.25em 1em;
+    font-weight: bold;
+    color: white;
+}
+
+/* Styling the home page button */
+#hompage-button{
+    background-color: rgb(52, 58, 64);
+    border: none;
+    outline: none;
+    font-size: 2.5em;
+}
+
+#hompage-button:hover{
+    background-color: rgb(52, 58, 64);
+}
+
+/* Making home page button responsive */
+@media only screen and (max-width: 500px){
+    #hompage-button{
+        font-size: 1.5em;
+    }
+    @media only screen and (max-width: 260px){
+        #hompage-button{
+            font-size: 1em;
+        }
+    }
+}

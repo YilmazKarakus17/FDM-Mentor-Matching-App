@@ -1,0 +1,22 @@
+h3{
+    text-align: center;
+}
+
+#sign-in-page{
+    height: 100%;
+    vertical-align: middle;
+}
+
+#sign-in-form{
+    width: 100%;
+
+    margin: auto;
+    vertical-align: middle;
+}
+
+.text-danger{
+    width: 100%;
+    text-align: center;
+    font-size: medium;
+    padding-bottom: 2%;
+}
