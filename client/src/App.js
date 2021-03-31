@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import Axios from 'axios';
 import Nav from './Nav';
 
+// eslint-disable-next-line
+import TechnicianLogin from './login/TechnicianLogin'
 import StandardLogin from './login/StandardLogin'
 
 export default class App extends React.Component{
@@ -20,7 +22,7 @@ export default class App extends React.Component{
           <Nav />
         </header>
         <div id="page-content">
-          <StandardLogin />
+          <TechnicianLogin />
         </div>
         <footer id="footer-content">
           <h6>

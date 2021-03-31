@@ -2,7 +2,7 @@ import React from 'react';
 import './Style.css';
 import Axios from 'axios';
 
-export default class TechnicianLogin extends React.Component{
+export default class StandardLogin extends React.Component{
     constructor(props){
         super(props);
     }
