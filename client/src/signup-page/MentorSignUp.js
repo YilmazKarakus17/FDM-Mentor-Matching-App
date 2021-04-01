@@ -36,14 +36,14 @@ class MentorSignUp extends Component {
         super(props);
     
         this.state = {
-          firstname: "",
-          lastname: "",
-          email: "",
-          fdm_id: "",
-          pwd: "",
-          description: "",
+          firstname: null,
+          lastname: null,
+          email: null,
+          fdm_id: null,
+          pwd: null,
+          description: null,
           img: "image",
-          phone: "",
+          phone: null,
           mentor_id: "mentor who?",
           formErrors: {
             firstname: "",
@@ -81,17 +81,12 @@ class MentorSignUp extends Component {
         }
       };
 
-      // validate(){
-      //   let fdmID = docuemnt.getElementById('fdmId').value;
-      //   let first...
-
-
-      // }
       
       handleChange = e => {
         e.preventDefault();
         const { name, value } = e.target;
         let formErrors = { ...this.state.formErrors };
+        
         switch (name) {
           
           case "firstname":
@@ -142,10 +137,23 @@ class MentorSignUp extends Component {
       };
 
 
-    addMentorApplication(fdm_id,pwd, firstname, lastname, description, email,img,phone )
+          addMentorApplication(fdm_id,pwd, firstname, lastname, description, email,img,phone )
     {
      
-
+      console.log("amazing is", pwd, fdm_id, firstname, lastname, description, email, img, phone  );
+      //console.log();
+      Axios.post('http://localhost:3001/api/insert/mentor-application', {
+        id: 'fdm199',//fdm_id,
+        pwd: document.getElementById('pwd'),
+        fname: 'ddedd',
+        lname: 'fdm199',
+        desc: 'fdm199',
+        img: 'fdm199',
+        email: 'fdm199',
+        phone: 'fdm199',
+      }).then((response) => {
+        console.log(response)
+      });
     }
         
       render() {
@@ -165,7 +173,6 @@ class MentorSignUp extends Component {
                     placeholder="  type first name here"
                     type="text"
                     name="firstname"
-                    id="firstname"
                     noValidate
                     onChange={this.handleChange}
                   />
@@ -181,7 +188,6 @@ class MentorSignUp extends Component {
                     placeholder=" type last name here"
                     type="text"
                     name="lastname"
-                    id="lastname"
                     noValidate
                     onChange={this.handleChange}
                   />    
@@ -195,7 +201,6 @@ class MentorSignUp extends Component {
                     placeholder=" type your fdm_id"
                     type="fdm_id"
                     name="fdm_id"
-                    id="fdmId"
                     noValidate
                     onChange={this.handleChange}
                   />
@@ -213,7 +218,6 @@ class MentorSignUp extends Component {
                     placeholder=" Email"
                     type="email"
                     name="email"
-                    id="email"
                     noValidate
                     onChange={this.handleChange}
                   />
@@ -247,7 +251,6 @@ class MentorSignUp extends Component {
                     placeholder=" Type your description here"
                     type="description"
                     name="description"
-                    id="description"
                     noValidate
                     onChange={this.handleChange}
                   />
@@ -264,7 +267,6 @@ class MentorSignUp extends Component {
                     placeholder=" Type your phone no. here"
                     type="phone"
                     name="phone"
-                    id="phone"
                     noValidate
                     onChange={this.handleChange}
                   />
