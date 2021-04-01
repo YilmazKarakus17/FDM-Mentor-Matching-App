@@ -8,35 +8,105 @@ import Nav from './Nav';
 import TechnicianLogin from './login/TechnicianLogin'
 import StandardLogin from './login/StandardLogin'
 import LandingPage from './LandingPage'
+import MentorSignUp from './signup-page/MentorSignUp'
+import MenteeSignUp from './signup-page/MenteeSignUp'
 
 export default class App extends React.Component{
   constructor(props){
     super(props)
   }
 
+  componentDidMount(){
+    this.loadPageContent();
+  }
+
+  //Method used to change the current page content to be the landing page
+  landingRedirect = () => {
+    ReactDOM.render(<LandingPage standardLoginRedirect={this.standardLoginRedirect} technicianLoginRedirect={this.technicianLoginRedirect} 
+      menteeSignUpRedirect={this.menteeSignUpRedirect} mentorApplicationRedirect={this.mentorApplicationRedirect} />, 
+      document.getElementById('page-content')
+    );
+  }
+
+  //Method used to change the current page content to be the standard login page
+  standardLoginRedirect = () => {
+    ReactDOM.render(<StandardLogin />, document.getElementById('page-content'))
+  }
+
+  //Method used to change the current page content to be the technician login page
+  technicianLoginRedirect = () =>{
+    ReactDOM.render(<TechnicianLogin />, document.getElementById('page-content'))
+  }
+
+   //Method used to change the current page content to be the mentee signup page
+   menteeSignUpRedirect = () => {
+    ReactDOM.render(<MenteeSignUp />, document.getElementById('page-content'))
+  }
+
+  //Method used to change the current page content to be the mentor application page
+  mentorApplicationRedirect = () => {
+  ReactDOM.render(<MentorSignUp />, document.getElementById('page-content'))
+  }
+
 
   //Loads the correct component to be used for page content, based on whether the user is already logged in and on which account
   loadPageContent(){
-    if ((("fdmEmail" in localStorage) && ("pwd" in localStorage)) || (("id" in localStorage) && ("pwd" in localStorage)))
+    if (("fdmEmail" in localStorage) && ("pwd" in localStorage))
     {
-
+      Axios.post('http://localhost:3001/api/get/mentee/credentials-check', {
+        fdmEmail: localStorage.getItem("fdmEmail"),
+        pwd: localStorage.getItem("pwd")
+      }).then((response) => {
+        if (response.data.match){
+          alert("Mentee logged In")
+        }
+        else{
+          localStorage.removeItem("fdmEmail");
+          localStorage.removeItem("pwd");
+          this.landingRedirect();
+          alert("Login credentials expired please try logging in again");
+        }
+      });
+    }
+    else if (("id" in localStorage) && ("pwd" in localStorage)){
+      Axios.post('http://localhost:3001/api/get/mentor/credentials-check', {
+        id: localStorage.getItem("id"),
+        pwd: localStorage.getItem("pwd")  
+      }).then((response) => {
+        if (response.data.match){
+          alert("mentor signed in")
+        }
+        else{
+          Axios.post('http://localhost:3001/api/get/technician/credentials-check', {
+            id: localStorage.getItem("id"),
+            pwd: localStorage.getItem("pwd") 
+          }).then((response) => {
+            if (response.data.match){
+              alert("technician signed in")
+            }
+            else{
+              localStorage.removeItem("id");
+              localStorage.removeItem("pwd");
+              this.landingRedirect();
+              alert("Login credentials expired please try logging in again");
+            }
+          });
+        }
+      });
     }
     else{
-      // ReactDOM.render(<LandingPage />, 
-      //   document.getElementById('page-content')
-      // );
+      this.landingRedirect();
     }
   }
 
   render(){
-    //logic code
     return (
       <div id="app">
         <header id="header-content">
-          <Nav />
+          <Nav landingRedirect={this.landingRedirect} />
         </header>
         <div id="page-content">
-          <LandingPage />
+
         </div>
         <footer className="page-footer font-small pt-4" id="footer-content">
           <h6>

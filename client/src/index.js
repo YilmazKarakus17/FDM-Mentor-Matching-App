@@ -8,7 +8,7 @@ import StandardLogin from './login/StandardLogin'
 import MentorSignUp from './signup-page/MentorSignUp'
 
 ReactDOM.render(
-    <App />,
+    <MentorSignUp />,
   document.getElementById('root')
 );
 

@@ -4,6 +4,9 @@ import './Nav.css';
 export default class Nav extends React.Component{
   constructor(props){
     super(props)
+    this.state ={
+      landingRedirect: this.props.landingRedirect
+    }
   }
 
 
@@ -11,15 +14,15 @@ export default class Nav extends React.Component{
     //logic code
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"></div>
+        <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"></div>
         <div className="mx-auto order-0">
-          <button className="navbar-brand mx-auto" id="hompage-button">FDM Mentor Matcher</button>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-           <span class="navbar-toggler-icon"></span>
+          <button className="navbar-brand mx-auto" id="hompage-button" onClick={() => {this.state.landingRedirect()}}>FDM Mentor Matcher</button>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+           <span className="navbar-toggler-icon"></span>
           </button>
         </div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">    
-          <ul class="navbar-nav ml-auto">
+        <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">    
+          <ul className="navbar-nav ml-auto">
             <button className="nav-item" id="logout-button">Logout</button>
          </ul>
         </div>
