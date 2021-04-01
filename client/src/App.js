@@ -24,7 +24,7 @@ export default class App extends React.Component{
         <div id="page-content">
           <TechnicianLogin />
         </div>
-        <footer id="footer-content">
+        <footer className="page-footer font-small pt-4" id="footer-content">
           <h6>
             FDM Mentor Matcher © 2021 Group 16
           </h6>

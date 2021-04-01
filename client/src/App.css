@@ -1,7 +1,10 @@
-
+#app{
+  min-height: 100vh;
+}
 
 /* Styling the footer */
 footer{
+  width: 100vw;
   color: white;
   height: 4em;
   background-color: rgb(52, 58, 64);
