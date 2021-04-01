@@ -7,12 +7,26 @@ import Nav from './Nav';
 // eslint-disable-next-line
 import TechnicianLogin from './login/TechnicianLogin'
 import StandardLogin from './login/StandardLogin'
+import LandingPage from './LandingPage'
 
 export default class App extends React.Component{
   constructor(props){
     super(props)
   }
 
+
+  //Loads the correct component to be used for page content, based on whether the user is already logged in and on which account
+  loadPageContent(){
+    if ((("fdmEmail" in localStorage) && ("pwd" in localStorage)) || (("id" in localStorage) && ("pwd" in localStorage)))
+    {
+
+    }
+    else{
+      // ReactDOM.render(<LandingPage />, 
+      //   document.getElementById('page-content')
+      // );
+    }
+  }
 
   render(){
     //logic code
@@ -22,7 +36,7 @@ export default class App extends React.Component{
           <Nav />
         </header>
         <div id="page-content">
-          <TechnicianLogin />
+          <LandingPage />
         </div>
         <footer className="page-footer font-small pt-4" id="footer-content">
           <h6>
