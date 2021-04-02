@@ -8,7 +8,7 @@ export default class MentorSignUp extends Component {
     }
 
   validate(){
-
+    return true;
   }
 
   submitEventHandler = () =>{

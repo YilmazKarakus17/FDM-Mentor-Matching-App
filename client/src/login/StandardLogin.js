@@ -4,11 +4,13 @@ import Axios from 'axios';
 
 export default class StandardLogin extends React.Component{
     constructor(props){
-        super(props);
-    }
-
+        super(props)
+        this.state ={
+          loadPageContent: this.props.loadPageContent
+        }
+      }
     /*Signs in mentors and mentees by creating the necessary cookies and requesting page redirection from the app if the credentials are valid */
-    signIn(){
+    signIn = () => {
         let uname = document.getElementById('username-input').value;
         let pwd = document.getElementById('pwd-input').value;
         let matched = false;
@@ -28,6 +30,7 @@ export default class StandardLogin extends React.Component{
                     localStorage.setItem("id", uname.toString());
                     localStorage.setItem("pwd", pwd.toString());
                     localStorage.removeItem("fdmEmail"); // removing fdm email key-value pair
+                    this.state.loadPageContent();      
                 }
               });       
         }
@@ -44,6 +47,7 @@ export default class StandardLogin extends React.Component{
                     localStorage.setItem("fdmEmail", uname.toString());
                     localStorage.setItem("pwd", pwd.toString());
                     localStorage.removeItem("id"); // removing the fdm id key-value pair
+                    this.state.loadPageContent();
                 }
               });  
         }
@@ -64,7 +68,7 @@ export default class StandardLogin extends React.Component{
                         </div>
                         <div className="form-row mb-4">
                             <small id="error-msg" className="form-text text-danger"></small>
-                            <button className="btn btn-primary col-12" onClick={this.signIn}>Sign In</button>
+                            <button className="btn btn-primary col-12" onClick={() => this.signIn()}>Sign In</button>
                         </div>
                     </div>
                 </div>

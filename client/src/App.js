@@ -26,31 +26,43 @@ export default class App extends React.Component{
       menteeSignUpRedirect={this.menteeSignUpRedirect} mentorApplicationRedirect={this.mentorApplicationRedirect} />, 
       document.getElementById('page-content')
     );
+    this.renderNav();
   }
 
   //Method used to change the current page content to be the standard login page
   standardLoginRedirect = () => {
-    ReactDOM.render(<StandardLogin />, document.getElementById('page-content'))
+    ReactDOM.render(<StandardLogin loadPageContent={this.loadPageContent} />, document.getElementById('page-content'))
+    this.renderNav();
   }
 
   //Method used to change the current page content to be the technician login page
   technicianLoginRedirect = () =>{
-    ReactDOM.render(<TechnicianLogin />, document.getElementById('page-content'))
+    ReactDOM.render(<TechnicianLogin loadPageContent={this.loadPageContent} />, document.getElementById('page-content'))
+    this.renderNav();
   }
 
    //Method used to change the current page content to be the mentee signup page
    menteeSignUpRedirect = () => {
-    ReactDOM.render(<MenteeSignUp />, document.getElementById('page-content'))
+    ReactDOM.render(<MenteeSignUp />, document.getElementById('page-content'));
+    this.renderNav();
   }
 
   //Method used to change the current page content to be the mentor application page
   mentorApplicationRedirect = () => {
-  ReactDOM.render(<MentorSignUp />, document.getElementById('page-content'))
+    ReactDOM.render(<MentorSignUp />, document.getElementById('page-content'));
+    this.renderNav();
   }
 
+  //Method re renders a Nav component into the DOM
+  renderNav = () => {
+    //replaces the Nav component with a new Nav so that it's updated
+    ReactDOM.render(<Nav loadPageContent={this.loadPageContent} />, 
+      document.getElementById('header-content')
+    );
+  }
 
   //Loads the correct component to be used for page content, based on whether the user is already logged in and on which account
-  loadPageContent(){
+  loadPageContent = () => {
     if (("fdmEmail" in localStorage) && ("pwd" in localStorage))
     {
       Axios.post('http://localhost:3001/api/get/mentee/credentials-check', {
@@ -103,7 +115,7 @@ export default class App extends React.Component{
     return (
       <div id="app">
         <header id="header-content">
-          <Nav landingRedirect={this.landingRedirect} />
+          <Nav loadPageContent={this.loadPageContent} />
         </header>
         <div id="page-content">
 

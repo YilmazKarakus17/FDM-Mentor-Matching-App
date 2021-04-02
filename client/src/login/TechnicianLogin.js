@@ -4,11 +4,14 @@ import Axios from 'axios';
 
 export default class TechnicianLogin extends React.Component{
     constructor(props){
-        super(props);
-    }
+        super(props)
+        this.state ={
+          loadPageContent: this.props.loadPageContent
+        }
+      }
 
     /*Signs in technicians by creating the necessary cookies and requesting page redirection from the app if the credentials are valid */
-    signIn(){
+    signIn = () =>{
         //Retrieving the sign in credentials from the input elements
         let id = document.getElementById('fdm-id-input').value;
         let pwd = document.getElementById('pwd-input').value;
@@ -29,6 +32,7 @@ export default class TechnicianLogin extends React.Component{
                 localStorage.setItem("id", id.toString());
                 localStorage.setItem("pwd", pwd.toString());
                 localStorage.removeItem("fdmEmail"); // removing fdm email key-value pair
+                this.state.loadPageContent();   
             }
           });
     }
