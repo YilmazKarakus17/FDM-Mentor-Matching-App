@@ -11,53 +11,6 @@ export default class Nav extends React.Component{
     }
   }
 
-  componentDidMount(){
-    if (("fdmEmail" in localStorage) && ("pwd" in localStorage))
-    {
-      Axios.post('http://localhost:3001/api/get/mentee/credentials-check', {
-        fdmEmail: localStorage.getItem("fdmEmail"),
-        pwd: localStorage.getItem("pwd")
-      }).then((response) => {
-        if (response.data.match){
-          this.createLogoutButton();
-        }
-        else{
-          localStorage.removeItem("fdmEmail");
-          localStorage.removeItem("pwd");
-          this.removeLogoutBtn();
-        }
-      });
-    }
-    else if (("id" in localStorage) && ("pwd" in localStorage)){
-      Axios.post('http://localhost:3001/api/get/mentor/credentials-check', {
-        id: localStorage.getItem("id"),
-        pwd: localStorage.getItem("pwd")  
-      }).then((response) => {
-        if (response.data.match){
-          this.createLogoutButton();
-        }
-        else{
-          Axios.post('http://localhost:3001/api/get/technician/credentials-check', {
-            id: localStorage.getItem("id"),
-            pwd: localStorage.getItem("pwd") 
-          }).then((response) => {
-            if (response.data.match){
-              this.createLogoutButton();
-            }
-            else{
-              localStorage.removeItem("id");
-              localStorage.removeItem("pwd");
-              this.removeLogoutBtn()
-            }
-          });
-        }
-      });
-    }
-    else{
-      //Do nothing
-    }
-  }
-
   //removes the logout button from the DOM
   removeLogoutBtn = () =>{
     const emptyElement = React.createElement('div',{ },'');

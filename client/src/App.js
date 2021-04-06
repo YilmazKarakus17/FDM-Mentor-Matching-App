@@ -32,37 +32,31 @@ export default class App extends React.Component{
       menteeSignUpRedirect={this.menteeSignUpRedirect} mentorApplicationRedirect={this.mentorApplicationRedirect} />, 
       document.getElementById('page-content')
     );
-    this.renderNav();
   }
 
   //Method used to change the current page content to be the standard login page
   standardLoginRedirect = () => {
     ReactDOM.render(<StandardLogin loadPageContent={this.loadPageContent} />, document.getElementById('page-content'))
-    this.renderNav();
   }
 
   //Method used to change the current page content to be the technician login page
   technicianLoginRedirect = () =>{
     ReactDOM.render(<TechnicianLogin loadPageContent={this.loadPageContent} />, document.getElementById('page-content'))
-    this.renderNav();
   }
 
    //Method used to change the current page content to be the mentee signup page
    menteeSignUpRedirect = () => {
     ReactDOM.render(<MenteeSignUp />, document.getElementById('page-content'));
-    this.renderNav();
   }
 
   //Method used to change the current page content to be the mentor application page
   mentorApplicationRedirect = () => {
     ReactDOM.render(<MentorSignUp />, document.getElementById('page-content'));
-    this.renderNav();
   }
 
   //Method used to change the current page content to be the technician page
   technicianPageRedirect = () => {
     ReactDOM.render(<TechnicianPage />, document.getElementById('page-content'));
-    this.renderNav();
   }
 
 
@@ -83,12 +77,11 @@ export default class App extends React.Component{
         pwd: localStorage.getItem("pwd")
       }).then((response) => {
         if (response.data.match){
+          this.refs.Nav.createLogoutButton();
           alert("Mentee logged In")
         }
         else{
-          localStorage.removeItem("fdmEmail");
-          localStorage.removeItem("pwd");
-          this.landingRedirect();
+          this.landingPage();
           alert("Login credentials expired please try logging in again");
         }
       });
@@ -99,6 +92,7 @@ export default class App extends React.Component{
         pwd: localStorage.getItem("pwd")  
       }).then((response) => {
         if (response.data.match){
+          this.refs.Nav.createLogoutButton();
           alert("mentor signed in")
         }
         else{
@@ -107,12 +101,11 @@ export default class App extends React.Component{
             pwd: localStorage.getItem("pwd") 
           }).then((response) => {
             if (response.data.match){
+              this.refs.Nav.createLogoutButton();
               this.technicianPageRedirect()
             }
             else{
-              localStorage.removeItem("id");
-              localStorage.removeItem("pwd");
-              this.landingRedirect();
+              this.landingPage();
               alert("Login credentials expired please try logging in again");
             }
           });
@@ -120,15 +113,29 @@ export default class App extends React.Component{
       });
     }
     else{
-      this.landingRedirect();
+      this.landingPage();
     }
+  }
+
+  //Calls daemon methods to setup the app for redirecting to the landing page
+  landingPage = () =>{
+    this.removeAllCredentials();
+    this.refs.Nav.removeLogoutBtn();
+    this.landingRedirect();
+  }
+
+  //removes all the credential keys from local storage
+  removeAllCredentials = () => {
+    localStorage.removeItem("fdmEmail");
+    localStorage.removeItem("id");
+    localStorage.removeItem("pwd");
   }
 
   render(){
     return (
       <div id="app">
         <header id="header-content">
-          <Nav loadPageContent={this.loadPageContent} />
+          <Nav ref="Nav" loadPageContent={this.loadPageContent} />
         </header>
         <div id="page-content">
 
