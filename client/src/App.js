@@ -1,15 +1,21 @@
+//Importing React and React based modules
 import React from 'react';
-import './App.css';
 import ReactDOM from 'react-dom';
-import Axios from 'axios';
-import Nav from './Nav';
 
-// eslint-disable-next-line
+//Importing Axios for communicating with the server
+import Axios from 'axios';
+
+//Importing Components
+import Nav from './Nav';
 import TechnicianLogin from './login/TechnicianLogin'
 import StandardLogin from './login/StandardLogin'
 import LandingPage from './LandingPage'
 import MentorSignUp from './signup-page/MentorSignUp'
 import MenteeSignUp from './signup-page/MenteeSignUp'
+import TechnicianPage from './technician-page/TechnicianPage'
+
+//Importing styling
+import './App.css';
 
 export default class App extends React.Component{
   constructor(props){
@@ -53,6 +59,13 @@ export default class App extends React.Component{
     this.renderNav();
   }
 
+  //Method used to change the current page content to be the technician page
+  technicianPageRedirect = () => {
+    ReactDOM.render(<TechnicianPage />, document.getElementById('page-content'));
+    this.renderNav();
+  }
+
+
   //Method re renders a Nav component into the DOM
   renderNav = () => {
     //replaces the Nav component with a new Nav so that it's updated
@@ -94,7 +107,7 @@ export default class App extends React.Component{
             pwd: localStorage.getItem("pwd") 
           }).then((response) => {
             if (response.data.match){
-              alert("technician signed in")
+              this.technicianPageRedirect()
             }
             else{
               localStorage.removeItem("id");
