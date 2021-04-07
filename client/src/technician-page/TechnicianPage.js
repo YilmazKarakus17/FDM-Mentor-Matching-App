@@ -55,20 +55,24 @@ function TechnicianPage () {
     }
 
     return (
-        <div id="content"> 
+        <div id="technician-page-content"> 
             {applicationList.map((val)=>{
                 return (
-                    <div className="container" key={val.fdm_id}>
-                        <div className = "card">
-                        <h1>FDM ID: {val.fdm_id}</h1>
-                        <h1>Name: {val.firstname} {val.lastname}</h1>
-                        <p>Desc: {val.description} </p>
-                        <p>Email: {val.email} </p>
-                        <p>[Phone]: {val.phone} </p>
-                            <div>
-                                <button className = "button button1" type="button" onClick={() => {generateApplication(val.fdm_id)}}>Generate</button>
-                                <button className = "button button2" type="button"onClick={() => {deleteApplication(val.fdm_id)}}>Decline</button>
-                            </div>
+                    <div className="container card" key={val.fdm_id}>
+                        <div className="row">        
+                            <h1 className="col-6" style={{textAlign:"left"}}>{val.firstname} {val.lastname}</h1>
+                            <h1 className="col-6" style={{textAlign:"right"}}>{val.fdm_id}</h1>
+                        </div>
+                        <div className="row">
+                            <p className="col-6" style={{textAlign:"left"}}>Email: {val.email} </p>
+                            <p className="col-6" style={{textAlign:"left"}}>Phone: {val.phone} </p>
+                        </div>
+                        <div className="row">
+                            <p className="col-12" style={{textAlign:"left"}}>Description: {val.description} </p>
+                        </div>
+                        <div className="button-container row">
+                            <button id="generate-button" type="button" onClick={() => {generateApplication(val.fdm_id)}}>Generate</button>
+                            <button id="decline-button" type="button"onClick={() => {deleteApplication(val.fdm_id)}}>Decline</button>
                         </div>
                     </div>
                 )
