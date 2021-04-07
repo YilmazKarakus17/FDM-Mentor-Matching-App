@@ -7,8 +7,10 @@ import TechnicianLogin from './login/TechnicianLogin'
 import StandardLogin from './login/StandardLogin'
 import MentorSignUp from './signup-page/MentorSignUp'
 
+import SearchMentor from './mentee-page/SearchMentor'
+
 ReactDOM.render(
-    <App />,
+    <SearchMentor />,
   document.getElementById('root')
 );
 
