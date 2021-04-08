@@ -142,7 +142,7 @@ export default class App extends React.Component{
         </div>
         <footer className="page-footer font-small pt-4" id="footer-content">
           <h6>
-            FDM Mentor Matcher © 2021 Group 16
+            FDM Mentor Matcher © 2021 Group 10
           </h6>
         </footer>
       </div>
