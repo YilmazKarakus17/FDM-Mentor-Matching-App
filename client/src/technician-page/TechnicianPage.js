@@ -12,7 +12,7 @@ function TechnicianPage () {
         answer: ""
     };
 
-    emailjs.init("user_O5AdVF9894kjJ3m9aqCwr");
+    emailjs.init("user_X04GI2ZgYrP5SyzVfqI16");
 
     useEffect(() => {
         axios.get('http://localhost:3001/api/get/applicants/interval=5').then((response) => {
@@ -30,9 +30,7 @@ function TechnicianPage () {
                             console.log(response)
                             if(validateResponse(response)){
                                 sendEmail(firstname,email,'Accepted')
-                            }
-                            window.alert('Email sent!')
-                            window.location.reload();                              
+                            }                           
                         });
                    }
                 });
@@ -46,9 +44,7 @@ function TechnicianPage () {
             if (validateResponse(response)){
                 if(validateResponse(response)){
                     sendEmail(firstname,email,'Declined')
-                }  
-                window.alert('Email sent!')
-                window.location.reload();                            
+                }             
             }
         })
        
@@ -75,12 +71,12 @@ function TechnicianPage () {
         templateParams.to_email = email
         templateParams.answer = answer
         templateParams.to_name = firstname
-        emailjs.send("service_qz7s0yc", "template_k5vclo8", templateParams).then(
+        emailjs.send("service_rpod9x5", "template_pi70ohu", templateParams).then(
             function (response) {
-              console.log("SUCCESS!", response.status, response.text);
+              window.location.reload();   
             },
             function (error) {
-              console.log("FAILED...", error);
+                window.alert("FAILED...", error)  
             }
         );
     };
