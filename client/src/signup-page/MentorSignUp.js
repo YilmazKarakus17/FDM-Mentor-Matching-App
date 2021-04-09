@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from 'axios';
 import Select from 'react-select';
-
+import './mentorCss.css';
 //
 // dependencies: npm add react-select
 //
@@ -161,6 +161,7 @@ export default class MentorSignUp extends Component {
     if (document.getElementById('fdm_id').value <3) {
         // wrong fdm id
       document.getElementById('error-id').innerHTML = "Error: short fdm id"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       console.log("needs at least 3 characters")
       return 
      // //!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test('phone'))
@@ -235,7 +236,7 @@ export default class MentorSignUp extends Component {
                         document.getElementById('error-id').innerHTML = "Error: application exists"
                         console.log("application already exists")
                         document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-                        return false
+                        return 
                       } else{
                           // post everything
                           Axios.post('http://localhost:3001/api/insert/mentor-application',{
@@ -301,106 +302,145 @@ export default class MentorSignUp extends Component {
     const { selectedOption5 } = this.state;
     const { selectedOption6 } = this.state;
     const { selectedOption7 } = this.state;
+
     return(
-     
-      <div className="wrapper">
-      <div className="form-wrapper">
-          <h1>Create Account</h1>
-          <input className="" placeholder="First Name" type="text" name="firstname" id="firstname"/>
-          <small id="error-f" className="form-text text-danger"></small>
+            
+            <div class="container-contact2">
+			          <div class="wrap-contact2"></div>
+                <h2 class="title-big">One step away from becoming a mentor!</h2>
+                  <div>
+                  <br></br><br></br>
+                  <h1 class="small-title">Please fill out the application form</h1>
+                  <br></br>
+                  
+                  <div class="names">First Name</div>
+                  <input className="form" placeholder="First Name" type="text" name="firstname" id="firstname"/>
+                  <small id="error-f" className="alert-box error"></small>
+                  
+                  <div class="names">Last Name</div>
+                  <input className="form" placeholder="Last Name" type="text" name="lastname"id="lastname" />
+                  <small id="error-l" className="alert-box error"></small>
+                  
+                  <div class="names">FDM ID</div>
+                  <input className="form" placeholder="Fdm Id" type="fdm_id" name="fdm_id"id="fdm_id" />
+                  <small id="error-id" className="alert-box error"></small>
 
-          <input className="" placeholder="Last Name" type="text" name="lastname"id="lastname" />
-          <small id="error-l" className="form-text text-danger"></small>
+                  <div class="names">Password</div>
+                  <input className="form" placeholder="Password" type="password" name="pwd" id="pwd" />
+                  <small id="error-pwd" className="alert-box error"></small>
 
-          <input className="" placeholder="Fdm Id" type="fdm_id" name="fdm_id"id="fdm_id" />
-          <small id="error-id" className="form-text text-danger"></small>
+                  <div class="names">Describe yourself in a few words</div>
+                  <input className="form" placeholder="Description" type="description" name="description" id="description" />
+                  <small id="error-desc" className="alert-box error"></small>
 
-          <input className="" placeholder="Password" type="password" name="pwd" id="pwd" />
-          <small id="error-pwd" className="form-text text-danger"></small>
+                  <div class="names">Email</div>
+                  <input className="form" placeholder="Email" type="email" name="email" id="email" />
+                  <small id="error-email" className="alert-box error"></small>
 
-          <input className="" placeholder="Description" type="description" name="description" id="description" />
-          <small id="error-desc" className="form-text text-danger"></small>
+                  <div class="names">Contact phone</div>
+                  <input className="form" placeholder="Phone" type="phone" name="phone" id="phone" />
+                  <small id="error-phone" className="alert-box error"></small>
+                  </div>
+                
+                  <br></br><br></br>
+                  <div class="big-names">
+                      Choose 3 different soft skills from the following lists:
+                  </div >
 
-          <input className="" placeholder="Email" type="email" name="email" id="email" />
-          <small id="error-email" className="form-text text-danger"></small>
+                  <div class="box">
+                    <Select 
+                    //soft skills
+                      value={selectedOption}
+                      onChange={this.handleChange1}
+                      id="changed"
+                      options={options1}
+                    />
+                  </div>
+                  
+                  <br></br>
 
-          <input className="" placeholder="Phone" type="phone" name="phone" id="phone" />
-          <small id="error-phone" className="form-text text-danger"></small>
-          
+                <div class="box">
+                  <Select
+                    //soft skills
+                        value={selectedOption3}
+                        onChange={this.handleChange3}
+                        id="changed3"
+                        options={options1}
+                    />
+                 </div>
+                <br></br>
+
+                 <div class="box">
+                    <Select
+                    //soft skills
+                        value={selectedOption4}
+                        onChange={this.handleChange4}
+                        id="changed4"
+                        options={options1}
+                    />
+                </div>
+
+                  <small id="error-soft" className="alert-box error"></small>
+                  <br></br>
+                  <div class="big-names">
+                      Choose 4 different hard skills from the following lists:
+                  </div>
+
+                  <div class="box">
+                      <Select
+                      //hard skills
+                          value={selectedOption2}
+                          onChange={this.handleChange2}
+                          id="changed2"
+                          options={options2}
+                      />
+                  </div>
+                  <br></br>
+
+                  <div class="box">
+                    <Select
+                      //hard skills
+                          value={selectedOption5}
+                          onChange={this.handleChange5}
+                          id="changed5"
+                          options={options2}
+                      />
+                  </div>
+
+                  <br></br>
+                  <div class="box">
+                    <Select
+                    //hard skills
+                        value={selectedOption6}
+                        onChange={this.handleChange6}
+                        id="changed6"
+                        options={options2}
+                    />
+                  </div>
+                  <br></br>
+
+                  <div class="box">
+                    <Select
+                    //hard skills
+                        value={selectedOption7}
+                        onChange={this.handleChange7}
+                        id="changed7"
+                        options={options2}
+                    />
+                  </div>
+
+                  <small id="error-hard" className="alert-box error"></small>
+                  <br></br>
+                  <small id="error-db" className="alert-box error"></small>
+                  <br></br>
+                  <div class="button">
+                      <b onClick={() => this.submitEventHandler()}>Submit</b>
+                  </div>
+                  
+                </div>
+             
         
-          <br></br><br></br>
-          <div class="">
-              <h4>Choose 3 different soft skills from the following lists:</h4>
-          </div>
-          <Select
-          //soft skills
-            value={selectedOption}
-            onChange={this.handleChange1}
-            id="changed"
-            options={options1}
-          />
-          <br></br>
-         <Select
-          //soft skills
-              value={selectedOption3}
-              onChange={this.handleChange3}
-              id="changed3"
-              options={options1}
-          />
-          <br></br>
-          <Select
-          //soft skills
-              value={selectedOption4}
-              onChange={this.handleChange4}
-              id="changed4"
-              options={options1}
-          />
-          <small id="error-soft" className="form-text text-danger"></small>
-          <br></br>
-          <div class="">
-              <h4>Choose 4 different hard skills from the following lists:</h4>
-          </div>
-          <Select
-          //hard skills
-              value={selectedOption2}
-              onChange={this.handleChange2}
-              id="changed2"
-              options={options2}
-          />
-          <br></br>
-           <Select
-          //hard skills
-              value={selectedOption5}
-              onChange={this.handleChange5}
-              id="changed5"
-              options={options2}
-          />
-          <br></br>
-           <Select
-          //hard skills
-              value={selectedOption6}
-              onChange={this.handleChange6}
-              id="changed6"
-              options={options2}
-          />
-          <br></br>
-           <Select
-          //hard skills
-              value={selectedOption7}
-              onChange={this.handleChange7}
-              id="changed7"
-              options={options2}
-          />
-          <small id="error-hard" className="form-text text-danger"></small>
-          <br></br>
-          <small id="error-db" className="form-text text-danger"></small>
-          <br></br>
-          <button onClick={() => this.submitEventHandler()}>Submit</button>
-         
-        
-
-      </div>
-    </div>
+  
     )
   }
 }
