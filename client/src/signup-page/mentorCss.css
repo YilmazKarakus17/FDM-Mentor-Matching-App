@@ -1,10 +1,13 @@
 
 .alert-box {
-  color:#555;
+  margin-bottom: 15px ;
+  margin-top: 15px ;
   font-family:Tahoma, Geneva, Arial, sans-serif;
   font-size:20px;
-  padding:10px 36px;
+  padding:20px 36px; 
   margin:10px;
+  /* margin-bottom: 30px;
+  margin-top: 30px; */
   color:rgb(173, 0, 0);
  
 }
@@ -12,10 +15,9 @@
   font-weight:bold;
   text-transform:uppercase;
   letter-spacing: 1px;
-}
-.error {
   
 }
+
 .container-contact2 {
     /* width: 100%;  
     min-height: 100vh;
@@ -51,6 +53,7 @@
         color: #1c87c9;
         background-color: #eee;
         border-radius: 5px;
+        margin-bottom: 15px ;
       
   }
   .names{
@@ -59,7 +62,7 @@
 
   .big-names{
     margin-bottom: 15px ;
-    font-size: 25px;
+    font-size: 20px;
   }
 
   .form{
@@ -128,6 +131,7 @@
     /* position: relative; */
     border: 1px solid red;
     height: 100px;
+    
   }
   
   

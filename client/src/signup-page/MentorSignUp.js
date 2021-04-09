@@ -49,6 +49,10 @@ const options2 = [
   { value: 'sftTst', label: 'Software Testing' },
   { value: 'bubsnIntel', label: 'Business Intelligence' },
   { value: 'auto', label: 'Automation' },
+];
+
+//departments
+const options3 = [
   { value: 'mrkt', label: 'Marketing' },
   { value: 'hr', label: 'HR' },
   { value: 'fin', label: 'Finance' },
@@ -185,7 +189,7 @@ export default class MentorSignUp extends Component {
               console.log("needs at least 20 characters")
               document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
               return 
-        }else if(document.getElementById('phone').value.length !=10){
+        }else if(document.getElementById('phone').value.length <10 || document.getElementById('phone').value.length >11){
               document.getElementById('error-phone').innerHTML = "Error: Failed! Invalid phone number"
               console.log("needs at least 20 characters")
               document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
@@ -344,7 +348,7 @@ export default class MentorSignUp extends Component {
                 
                   <br></br><br></br>
                   <div class="big-names">
-                      Choose 3 different soft skills from the following lists:
+                      Choose three different soft skills that apply to you from the following lists:
                   </div >
 
                   <div class="box">
@@ -383,7 +387,7 @@ export default class MentorSignUp extends Component {
                   <small id="error-soft" className="alert-box error"></small>
                   <br></br>
                   <div class="big-names">
-                      Choose 4 different hard skills from the following lists:
+                      Choose two different hard skills that apply to you from the following lists:
                   </div>
 
                   <div class="box">
@@ -407,30 +411,36 @@ export default class MentorSignUp extends Component {
                       />
                   </div>
 
+                  <br></br><br></br>
+                  <div class="big-names">
+                      Choose two different departments of expertise from the following lists:
+                  </div >
+
                   <br></br>
                   <div class="box">
                     <Select
-                    //hard skills
+                    //department
                         value={selectedOption6}
                         onChange={this.handleChange6}
                         id="changed6"
-                        options={options2}
+                        options={options3}
                     />
                   </div>
                   <br></br>
 
                   <div class="box">
                     <Select
-                    //hard skills
+                    //departments
                         value={selectedOption7}
                         onChange={this.handleChange7}
                         id="changed7"
-                        options={options2}
+                        options={options3}
                     />
                   </div>
+                
 
                   <small id="error-hard" className="alert-box error"></small>
-                  <br></br>
+                  <br></br><br></br>
                   <small id="error-db" className="alert-box error"></small>
                   <br></br>
                   <div class="button">
