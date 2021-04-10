@@ -10,7 +10,7 @@ import MentorSignUp from './signup-page/MentorSignUp'
 import SearchMentor from './mentee-page/SearchMentor'
 import MentorPage from './mentor-page/MentorPage'
 ReactDOM.render(
-    <App fdmId="fdm1" />,
+    <SearchMentor fdmEmail="fdm0003@fdm.co.uk" />,
   document.getElementById('root')
 );
 

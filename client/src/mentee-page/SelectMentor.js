@@ -16,7 +16,6 @@ export default class SelectMentor extends React.Component{
 
     componentWillMount(){
         Axios.get(`http://localhost:3001/api/get/mentor/${this.state.fdmId}`).then((response) => {
-                console.log(response)
                 this.setState({
                     mentorDetail: response.data[0]
                 })

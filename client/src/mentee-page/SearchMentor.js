@@ -15,8 +15,8 @@ export default class SearchMentor extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            fdmEmail: "fdm0001@fdm.co.uk",
-            topMatches: [{fdmId:"fdm1"},{fdmId:"fdm2"}]
+            fdmEmail: this.props.fdmEmail,
+            topMatches: []
         }
     }
 
@@ -110,9 +110,10 @@ export default class SearchMentor extends React.Component{
                 alert("Error occurred mentee areas of improvement doesn't exist")
             }
             else{
+                let menteeAreasOfImprovements = response.data[0];
                 //API call to get all the fdm Id and areas of expertise of all mentors with areas of expertise
                 Axios.get('http://localhost:3001/api/get/areasOfExpertise/mentors-only').then((response) => {
-                    let topMatches = this.findTopMentors(new UserMatchingVector(response.data[0]),this.createArrayOfMentors(response.data));
+                    let topMatches = this.findTopMentors(new UserMatchingVector(menteeAreasOfImprovements),this.createArrayOfMentors(response.data));
                     //Using method to get the top mentor matches
                     this.setState({
                         topMatches: topMatches
