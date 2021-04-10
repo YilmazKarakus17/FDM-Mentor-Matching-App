@@ -8,6 +8,9 @@ import Axios from 'axios';
 import UserMatchingVector from './UserMatchingVector'
 import UserMatchingVectorIterator from './UserMatchingVectorIterator'
 
+//Importing components
+import SelectMentor from './SelectMentor'
+
 export default class SearchMentor extends React.Component{
     constructor(props){
         super(props);
@@ -58,8 +61,7 @@ export default class SearchMentor extends React.Component{
     //Matrix similarity algorithm used to calculate each mentors percentage of match to the mentee
     matrixSimilarity = (fdmId, mentorVector, menteeVector) => {
         return{fdmId, 
-            match:((this.calculateDotProduct(menteeVector.Iterator(),mentorVector.Iterator())) / (this.calculateVectorNorm(menteeVector.Iterator())*this.calculateVectorNorm(mentorVector.Iterator()))),
-            mentorDetails: []
+            match:((this.calculateDotProduct(menteeVector.Iterator(),mentorVector.Iterator())) / (this.calculateVectorNorm(menteeVector.Iterator())*this.calculateVectorNorm(mentorVector.Iterator())))
         };
     }
 
@@ -102,7 +104,7 @@ export default class SearchMentor extends React.Component{
         return topFiveMatches;
     }
 
-    componentDidMount(){
+    componentWillMount(){
         Axios.get(`http://localhost:3001/api/get/areas-of-improvements/${this.state.fdmEmail}`).then((response) =>{
             if (response.data.length == 0 || !this.validateResponse(response)){
                 alert("Error occurred mentee areas of improvement doesn't exist")
@@ -110,7 +112,6 @@ export default class SearchMentor extends React.Component{
             else{
                 //API call to get all the fdm Id and areas of expertise of all mentors with areas of expertise
                 Axios.get('http://localhost:3001/api/get/areasOfExpertise/mentors-only').then((response) => {
-
                     let topMatches = this.findTopMentors(new UserMatchingVector(response.data[0]),this.createArrayOfMentors(response.data))
                     //Using method to get the top mentor matches
                     this.setState({
@@ -127,9 +128,7 @@ export default class SearchMentor extends React.Component{
             <div>
                 {this.state.topMatches.map(match => {
                     return(
-                        <div key={match.fdmId}>
-                            {match.fdmId} {match.match}
-                        </div>
+                        <SelectMentor key={match.fdmId} fdmId={match.fdmId} menteeFdmEmail={this.state.fdmEmail}/>
                     )
                 })}
             </div>
