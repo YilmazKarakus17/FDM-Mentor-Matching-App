@@ -166,7 +166,15 @@ app.get('/api/get/mentor/mentees/:id', (req,res) =>{
     });
 });
 
-
+// Route Definition: Returns all the areas of expertise entries for distinct mentors
+app.get('/api/get/areasOfExpertise/mentors-only', (req,res) =>{
+    const sql = "SELECT DISTINCT mentor_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation FROM areas_of_expertise WHERE mentor_id IS NOT NULL"
+    conn.query(sql, (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result);
+    });
+});
 /****************************** Routes used to delete data ******************************/
 
 // Route Definition: Deletes an entry from the application table
@@ -206,7 +214,7 @@ app.post('/api/insert/mentor/bulk-insert/:id', (req,res) => {
 
 // Route Definition: Inserts a new entry into the areas of expertise table using existing entry
 app.post('/api/insert/areas-of-expertise/bulk-insert/:id', (req,res) => {
-    const sql = "INSERT INTO areas_of_expertise (mentor_id, application_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation) SELECT application_id, mentor_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation FROM areas_of_expertise WHERE application_id = ?";
+    const sql = "INSERT INTO areas_of_expertise (mentor_id, application_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation) SELECT DISTINCT application_id, mentor_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation FROM areas_of_expertise WHERE application_id = ?";
     conn.query(sql, req.params.id, (err, result) => {
         if (err) res.send(err);
         console.log(result);

@@ -2,8 +2,8 @@
 import UserMatchingVectorIterator from './UserMatchingVectorIterator'
 
 export default class UserMatchingVector{
-    constructor(apiJSONResponse){
-        this.vectorArray = this.setUserMatchingVector(apiJSONResponse);
+    constructor(arr){
+        this.vectorArray = this.setUserMatchingVector(arr);
         this.iterator = new UserMatchingVectorIterator(this);
     }
 

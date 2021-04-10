@@ -17,6 +17,7 @@ export default class UserMatchingVectorIterator{
             this.currentPos += 1;
             return val;
         }
+        this.reset();
         return;
     }
 

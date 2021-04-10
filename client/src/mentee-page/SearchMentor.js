@@ -1,5 +1,5 @@
 //Importing React and React based modules
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 //Importing Axios for communicating with the server
 import Axios from 'axios';
@@ -8,33 +8,132 @@ import Axios from 'axios';
 import UserMatchingVector from './UserMatchingVector'
 import UserMatchingVectorIterator from './UserMatchingVectorIterator'
 
-export default function SearchMentor(){
-    const[fdmEmail, setFdmEmail] = useState('fdm0001@fdm.co.uk')
-    const[menteeVector, setMenteeVector] = useState([]);
+export default class SearchMentor extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            fdmEmail: "fdm0001@fdm.co.uk",
+            topMatches: [{fdmId:"fdm1"},{fdmId:"fdm2"}]
+        }
+    }
 
-    useEffect(() => {
-        Axios.get(`http://localhost:3001/api/get/areas-of-improvements/${fdmEmail}`).then((response) =>{
-            if (response.data.length == 0){
+    //Function returns true if the response confirms nothing went wrong
+    validateResponse = (response) => {
+        if (response.data.code === "ECONNREFUSED"){
+            alert("API cannot connect to the servers");
+            return false;
+        }
+        return true;
+    }
+
+    //Returns an array of objects each containing a mentors fdm id and their user matching vector
+    createArrayOfMentors = (arr) =>{
+        let arrayOfMentors = [];
+        for (let i=0; i<arr.length; i++){
+            arrayOfMentors.push({fdmId:arr[i].mentor_id, userMatchingVector: new UserMatchingVector(arr[i])})
+        }
+        return arrayOfMentors;
+    }
+
+    //returns a calculated vector norm for the given vector
+    calculateVectorNorm = (vectorIterator) => {
+        let sum = 0;
+        while (vectorIterator.hasNext()){
+          sum += vectorIterator.next();
+        }
+        vectorIterator.reset();
+        return Math.sqrt(sum)
+    }
+
+    //Calculates dot product using vector iterators for mentee and mentor
+    calculateDotProduct = (menteeVectorIter, mentorVectorIter) => {
+        let dotProduct = 0;
+        while(menteeVectorIter.hasNext() && mentorVectorIter.hasNext()){           
+            dotProduct += (menteeVectorIter.next()*mentorVectorIter.next());
+        }
+        menteeVectorIter.reset(); mentorVectorIter.reset();
+        return dotProduct;
+    }
+
+    //Matrix similarity algorithm used to calculate each mentors percentage of match to the mentee
+    matrixSimilarity = (fdmId, mentorVector, menteeVector) => {
+        return{fdmId, 
+            match:((this.calculateDotProduct(menteeVector.Iterator(),mentorVector.Iterator())) / (this.calculateVectorNorm(menteeVector.Iterator())*this.calculateVectorNorm(mentorVector.Iterator()))),
+            mentorDetails: []
+        };
+    }
+
+    //Simple insertion sort for sorting an array of objects based on key-value pair for match
+    insertionSort = (arr) => {
+        for (let i = 1; i < arr.length; i++) {
+            this.insert(i, arr);
+        }
+        };
+    //Auxiliary function to insertionSort
+    insert = (i, arr) => {
+        let pivot = arr[i];
+        for (let j = i; j > 0; j--) {
+            if (pivot.match < arr[j-1].match) {
+                arr[j] = pivot;
+                return;
+            }
+            arr[j] = arr[j-1];
+            }
+        arr[0] = pivot;
+        return;
+        };
+
+    //Returns a array of objects each representing a distinct mentor's fdmId and their percentage of match for the top 5 matches
+    findTopMentors = (menteeVector, arrayOfMentors) =>{
+        let topFiveMatches = []
+        for (let i=0; i<arrayOfMentors.length; i++){
+            let crntMentorMatch = this.matrixSimilarity(arrayOfMentors[i].fdmId, arrayOfMentors[i].userMatchingVector, menteeVector);
+            if (i < 5){
+                topFiveMatches.push(crntMentorMatch);
+                this.insertionSort(topFiveMatches);
+                continue;
+            }
+
+            if (crntMentorMatch.match > topFiveMatches[4].match){
+                topFiveMatches[4] = crntMentorMatch;
+                this.insertionSort(topFiveMatches)
+            } 
+        }
+        return topFiveMatches;
+    }
+
+    componentDidMount(){
+        Axios.get(`http://localhost:3001/api/get/areas-of-improvements/${this.state.fdmEmail}`).then((response) =>{
+            if (response.data.length == 0 || !this.validateResponse(response)){
                 alert("Error occurred mentee areas of improvement doesn't exist")
             }
             else{
-                // for (let i = 0; i<=19; i++){
+                //API call to get all the fdm Id and areas of expertise of all mentors with areas of expertise
+                Axios.get('http://localhost:3001/api/get/areasOfExpertise/mentors-only').then((response) => {
 
-                // }
-                //{menteeVector}
-
-                let userMatchingVector = new UserMatchingVector(response.data[0]);
-                let iterator = userMatchingVector.Iterator()
-                setMenteeVector(userMatchingVector); //Setting the mentee vector to the integer representation of the mentees areas of improvement
+                    let topMatches = this.findTopMentors(new UserMatchingVector(response.data[0]),this.createArrayOfMentors(response.data))
+                    //Using method to get the top mentor matches
+                    this.setState({
+                        topMatches: topMatches
+                    });
+                });
+                
             }
         });
-    }, [])
+    }
 
-
-    return (
-        <div>
-            
-        </div>
-    )
+    render(){
+        return(
+            <div>
+                {this.state.topMatches.map(match => {
+                    return(
+                        <div key={match.fdmId}>
+                            {match.fdmId} {match.match}
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
 }
 

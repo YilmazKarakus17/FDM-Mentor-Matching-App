@@ -10,7 +10,7 @@ import MentorSignUp from './signup-page/MentorSignUp'
 import SearchMentor from './mentee-page/SearchMentor'
 
 ReactDOM.render(
-    <App />,
+    <SearchMentor />,
   document.getElementById('root')
 );
 
