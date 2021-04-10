@@ -8,9 +8,9 @@ import StandardLogin from './login/StandardLogin'
 import MentorSignUp from './signup-page/MentorSignUp'
 
 import SearchMentor from './mentee-page/SearchMentor'
-
+import MentorPage from './mentor-page/MentorPage'
 ReactDOM.render(
-    <SearchMentor />,
+    <App fdmId="fdm1" />,
   document.getElementById('root')
 );
 

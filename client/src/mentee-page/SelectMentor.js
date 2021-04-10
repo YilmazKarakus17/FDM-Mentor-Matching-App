@@ -25,7 +25,7 @@ export default class SelectMentor extends React.Component{
 
     render(){
         return(
-            <div style={{backgroundColor:"black", marginTop:"5%"}}>
+            <div style={{backgroundColor:"grey", marginTop:"5%"}}>
                 {this.state.fdmId}
                 <div style={{color:"white"}}>
                     {this.state.menteeFdmEmail}

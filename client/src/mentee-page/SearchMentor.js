@@ -112,7 +112,7 @@ export default class SearchMentor extends React.Component{
             else{
                 //API call to get all the fdm Id and areas of expertise of all mentors with areas of expertise
                 Axios.get('http://localhost:3001/api/get/areasOfExpertise/mentors-only').then((response) => {
-                    let topMatches = this.findTopMentors(new UserMatchingVector(response.data[0]),this.createArrayOfMentors(response.data))
+                    let topMatches = this.findTopMentors(new UserMatchingVector(response.data[0]),this.createArrayOfMentors(response.data));
                     //Using method to get the top mentor matches
                     this.setState({
                         topMatches: topMatches

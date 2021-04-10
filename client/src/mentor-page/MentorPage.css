@@ -1,0 +1,63 @@
+/* Styling the containers */
+#mentor-page-content{
+    min-width: 100%;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+  
+#mentor-page-content .container{
+    min-width: 75%;
+    max-width: 75%;
+    margin: auto;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Making the containers responsive */
+@media only screen and (max-width:1250px){
+    #mentor-page-content .container{
+        min-width: 85%;
+        max-width: 85%;
+    }
+    @media only screen and (max-width:750px){
+        #mentor-page-content .container{
+            min-width: 95%;
+            max-width: 95%;
+        }
+        @media only screen and (max-width:500px){
+            #mentor-page-content .container{
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+
+
+/* Styling the headings */
+#mentor-page-content h2{
+    text-align: center;
+}
+
+#mentor-page-content h5{
+    margin-top: 1em;
+    margin-bottom: 0%;
+    text-align: left;
+}
+
+/* ============= Styling the list of mentees ============= */
+/* Styling the card headers */
+#mentor-page-content .card-header{
+    font-size: 1.75em;
+    font-weight: 500;
+    border: none;
+    background-color: #f0ebe1;
+    color: dimgray;
+}
+
+#mentor-page-content .card-header:hover{
+    background-color: #e9dfcb;
+}
