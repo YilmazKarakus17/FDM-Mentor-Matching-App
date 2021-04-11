@@ -80,6 +80,9 @@ export default class MenteePage extends React.Component{
         if(this.state.hasMentor){
             pageContent = 
             <div id="mentor-details" className="container">
+                <div className="row">
+                    <h5 className="col-12">Your Mentor</h5>
+                </div>
                 <div className="card">
                     <button className="card-header" data-toggle="collapse" href="#MentorDetails">
                         {this.state.mentor.firstname} {this.state.mentor.lastname}

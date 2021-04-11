@@ -12,7 +12,7 @@ import MentorPage from './mentor-page/MentorPage'
 import SelectMentor from './mentee-page/SelectMentor'
 import MenteePage from './mentee-page/MenteePage'
 ReactDOM.render(
-    <MenteePage fdmEmail="fdm0006@fdm.co.uk" />,
+    <MenteePage fdmEmail="fdm0001@fdm.co.uk" />,
   document.getElementById('root')
 );
 
