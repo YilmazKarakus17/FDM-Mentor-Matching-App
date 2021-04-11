@@ -1,0 +1,162 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic&subset=latin,latin-ext,cyrillic,cyrillic-ext,greek-ext,greek,vietnamese);
+
+.select-mentor-container button {
+    font-family: Roboto;
+}
+.select-mentor-container h1, p {
+    position: relative;
+    font-family: Roboto;
+    font-weight: 300;
+    left: 2%;
+    color: #896658;
+  }
+/*w-300-container width for button+content*/
+.select-mentor-container .w-300{
+/*width: 100%;*/
+min-width: 100%;
+max-width: 100%;
+}
+/*h-200-container control for button height only*/
+.select-mentor-container .h-200{
+  height: 5em;
+}
+  
+/*wrap and styling of drop down box*/
+.select-mentor-container .wrap{
+    width: 100%;
+    overflow: hidden;
+    outline: None;
+
+}
+.select-mentor-container .content{
+  position: relative;
+  background-color: #f1ebde;
+  height: 100%;
+  width: 100%;
+  padding-top: 1em;
+  bottom:1em;
+  outline: None;  
+}
+
+/*animation for drop down box*/
+.select-mentor-container .example-enter {
+opacity: 0.01;
+transform: translateY(-100%);
+}
+.select-mentor-container  .example-enter.example-enter-active {
+opacity: 1;
+transform: translateY(0);
+transition: 300ms ease-in;
+}
+.select-mentor-container  .example-leave {
+opacity: 1;
+transform: translateY(0);
+}
+.select-mentor-container .example-leave.example-leave-active {
+opacity: 0.01;
+transform: translateY(-100%);
+transition: 300ms ease-in;
+}
+
+/*The "drawer" from which the drop down box emerges as well as the text contained within*/
+.select-mentor-container button{
+      border: None;
+      /*box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);*/
+      width: 100%;
+      background-color: #ece5d5;
+      outline: none;
+      text-align: left;
+      height: 5em;
+}
+.select-mentor-container span{
+    position: relative;
+    top:12px;
+    left:5px;
+}
+.select-mentor-container .openText{
+  min-width: 100%;
+  text-align: center;
+  font-weight: 500;
+  color: #4b4740;
+}
+
+.select-mentor-container .container{
+  min-width: 100%;
+  max-width: 100%;
+}
+
+/*Styling and animation of the plus icon*/
+.select-mentor-container .plus{
+  position: relative;
+  float: right;
+  background-color: #ece5d5;
+  width: 50px;
+  height: 50px;
+  top: 25px;
+  right: -30px;
+  transform: translate(-50%, -50%) rotate(90deg);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  transition: 0.4s cubic-bezier(0.2, 0.6, 0.3, 1.1);
+}
+.select-mentor-container .plus:after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 2px;
+  width: 50%;
+  background: black;
+} 
+.select-mentor-container .plus:before{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  width: 2px;
+  background: black;
+}
+.select-mentor-container .plus.clicked{
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+.select-mentor-container .plus.clicked:before{
+  width: 0;
+}
+
+/*Styling and animation of accept/select mentor button*/
+.select-mentor-container .accept {
+  background-color: black;
+  border: none;
+  color: white;
+  text-align: center;
+  height: 2em;
+  width: 20%;
+  margin-left: 80%;
+  opacity: 0.6;
+  font-size: 1em;
+  margin-bottom: 0.25em;
+}
+
+@media only screen and (max-width:1000px){
+  .select-mentor-container .accept {
+    width: 25%;
+    margin-left: 70%;
+  }
+  @media only screen and (max-width:750px){
+    .select-mentor-container .accept {
+      width: 35%;
+      margin-left: 32.5%;
+    }
+    @media only screen and (max-width:450px){
+      .select-mentor-container .accept {
+        width: 100%;
+        margin-left: 0%;
+      }  
+    } 
+  }
+}
+.select-mentor-container .accept:hover {opacity: 1}

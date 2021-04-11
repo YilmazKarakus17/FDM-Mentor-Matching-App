@@ -9,8 +9,10 @@ import MentorSignUp from './signup-page/MentorSignUp'
 
 import SearchMentor from './mentee-page/SearchMentor'
 import MentorPage from './mentor-page/MentorPage'
+import SelectMentor from './mentee-page/SelectMentor'
+
 ReactDOM.render(
-    <App />,
+    <SearchMentor fdmEmail="fdm0001@fdm.co.uk" />,
   document.getElementById('root')
 );
 
