@@ -406,7 +406,6 @@ export default class MentorSignUp extends Component {
             <button className="btn btn-primary" onClick={() => this.submitEventHandler()}>Submit Application</button>
           </div>
         </div>
-        <div className="row p-1"></div>
       </div>
     )
   }
