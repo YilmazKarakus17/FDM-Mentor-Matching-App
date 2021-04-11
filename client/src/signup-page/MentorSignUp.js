@@ -164,131 +164,135 @@ export default class MentorSignUp extends Component {
     //first validate the fdm_if field
     if (document.getElementById('fdm_id').value <3) {
         // wrong fdm id
-      document.getElementById('error-id').innerHTML = "Error: short fdm id"
+      document.getElementById('error-id').innerHTML = "FDM ID is too short"
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       console.log("needs at least 3 characters")
+      return
+    }else if (document.getElementById('pwd').value.length ==0 || document.getElementById('pwd').value.length <6){
+      document.getElementById('error-pwd').innerHTML = "Password must be at least 6 characters"
+      console.log("minimum 6 characters")
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
-     // //!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test('phone'))
-    // if ( document.getElementById('phone').length !=10 ){
-    //   console.log("wrong phone format")
-    //   document.getElementById('error-phone').innerHTML = "Error: Wrong phone number, must pe 10 digits."
-    //   return false
-    // }
-        }else if (document.getElementById('firstname').value.length ==0 || document.getElementById('lastname').value.length<3){
-              console.log("input name")
-              document.getElementById('error-f').innerHTML = "Error: First name or last name empty"
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        }else if (document.getElementById('pwd').value.length ==0 || document.getElementById('pwd').value.length <6){
-              document.getElementById('error-pwd').innerHTML = "Error: Short password, at least 6 characters"
-              console.log("minimum 6 characters")
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        }else if(document.getElementById('description').value.length <20){
-              document.getElementById('error-desc').innerHTML = "Error: Failed! Short description"
-              console.log("needs at least 20 characters")
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        }else if(document.getElementById('phone').value.length <10 || document.getElementById('phone').value.length >11){
-              document.getElementById('error-phone').innerHTML = "Error: Failed! Invalid phone number"
-              console.log("needs at least 20 characters")
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        } else if(document.getElementById('email').value.length !=0 && !document.getElementById('email').value.includes('@')){
-          console.log("invalid email address")
-          document.getElementById('error-email').innerHTML = "Error: Wrong email format"
+    }else if (document.getElementById('firstname').value.length ==0){
+          console.log("input name")
+          document.getElementById('error-f').innerHTML = "First Name Required"
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-          return 
-        } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || this.choice3 == this.choice4){
-          console.log("Choices are not different (soft)! Please check again.")
-          document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
+          return
+    }else if (document.getElementById('lastname').value.length<3){
+      console.log("input name")
+      document.getElementById('error-l').innerHTML = "Last Name Required"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return
+    } else if(document.getElementById('email').value.length ==0){
+      console.log("invalid email address")
+      document.getElementById('error-email').innerHTML = "Email Address Required"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(document.getElementById('email').value.length !=0 && !document.getElementById('email').value.includes('@')){
+      console.log("invalid email address")
+      document.getElementById('error-email').innerHTML = "Wrong Email Format"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    }else if(document.getElementById('phone').value.length <10 || document.getElementById('phone').value.length >11){
+          document.getElementById('error-phone').innerHTML = "Invalid Phone Number"
+          console.log("needs at least 20 characters")
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-          return 
-        } else if(this.choice2 == this.choice5 ||this.choice2 == this.choice6 || this.choice2 == this.choice7 ||
-          this.choice5 == this.choice6 ||this.choice5 == this.choice7 || this.choice6 == this.choice7){
-          console.log("Choices are not different (hard)! Please check again.")
-          document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
+          return
+    }else if(document.getElementById('description').value.length <20){
+      document.getElementById('error-desc').innerHTML = "Description requires minimum 20 characters"
+      console.log("needs at least 20 characters")
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || this.choice3 == this.choice4){
+      console.log("Choices are not different (soft)! Please check again.")
+      document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(this.choice2 == this.choice5 ||this.choice2 == this.choice6 || this.choice2 == this.choice7 ||
+      this.choice5 == this.choice6 ||this.choice5 == this.choice7 || this.choice6 == this.choice7){
+      console.log("Choices are not different (hard)! Please check again.")
+      document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else {
+      
+      Axios.get(`http://localhost:3001/api/get/fdm-ids/check-exists/${id}`).then((response) => {
+        console.log("nice", response.data.length)
+        
+        if (response.data.length==0){
+          //doesnt exist in database
+          document.getElementById('error-id').innerHTML = "Invalid FDM ID"
+          console.log("id does not exists")
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
           return 
         } else {
-          
-          Axios.get(`http://localhost:3001/api/get/fdm-ids/check-exists/${id}`).then((response) => {
-            console.log("nice", response.data.length)
-            
-            if (response.data.length==0){
-              //doesnt exist in database
-              document.getElementById('error-id').innerHTML = "Error: this fdm id does not exist"
-              console.log("id does not exists")
+
+          Axios.get(`http://localhost:3001/api/get/mentor/check-exists/${id}`).then((response) => {
+            console.log("cool", response.data.length)
+            if (response.data.length==1){
+              //id exists so its taken
+              document.getElementById('error-id').innerHTML = "This FDM ID is already in use"
+              console.log("id already registered")
               document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
               return 
-            } else {
-
-              Axios.get(`http://localhost:3001/api/get/mentor/check-exists/${id}`).then((response) => {
-                console.log("cool", response.data.length)
-                if (response.data.length==1){
-                  //id exists so its taken
-                  document.getElementById('error-id').innerHTML = "Error: this fdm id is already registered"
-                  console.log("id already registered")
-                  document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-                  return 
-                } else{
-                    // should exist in fdm_id table but not in mentor 
-                    Axios.get(`http://localhost:3001/api/get/applicants/check-exists/${id}`).then((response) => {
-                      console.log("mehhh", response.data.length)
-                      if (response.data.length==1){
-                        //application exists
-                        document.getElementById('error-id').innerHTML = "Error: application exists"
-                        console.log("application already exists")
-                        document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-                        return 
-                      } else{
-                          // post everything
-                          Axios.post('http://localhost:3001/api/insert/mentor-application',{
-                            id: document.getElementById('fdm_id').value,
-                            pwd: document.getElementById('pwd').value,
-                            fname: document.getElementById('firstname').value,
-                            lname: document.getElementById('lastname').value,
-                            desc: document.getElementById('description').value,
-                            img: "defaultImg.png",
-                            email: document.getElementById('email').value,
-                            phone: document.getElementById('phone').value,
+            } else{
+                // should exist in fdm_id table but not in mentor 
+                Axios.get(`http://localhost:3001/api/get/applicants/check-exists/${id}`).then((response) => {
+                  console.log("mehhh", response.data.length)
+                  if (response.data.length==1){
+                    //application exists
+                    document.getElementById('error-id').innerHTML = "This FDM ID is already in use"
+                    console.log("application already exists")
+                    document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+                    return 
+                  } else{
+                      // post everything
+                      Axios.post('http://localhost:3001/api/insert/mentor-application',{
+                        id: document.getElementById('fdm_id').value,
+                        pwd: document.getElementById('pwd').value,
+                        fname: document.getElementById('firstname').value,
+                        lname: document.getElementById('lastname').value,
+                        desc: document.getElementById('description').value,
+                        img: "defaultImg.png",
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                      }).then((response) =>{
+                              console.log(response);
+                              // areas of expertise
+                            Axios.post('http://localhost:3001/api/insert/areas-of-expertise/fk=applicant', {
+                              id: document.getElementById('fdm_id').value,
+                              comm:  dict['comm'] ,
+                              confidence: dict['confidence'], 
+                              timeMng: dict['timeMng'], 
+                              teamWrk: dict['teamWrk'], 
+                              ldr: dict['ldr'],
+                              organisation: dict['ldr'], 
+                              cldComp: dict['cldComp'], 
+                              sales: dict['sales'],
+                              rec: dict['rec'],
+                              mrkt: dict['mrkt'], 
+                              hr: dict['hr'],
+                              fin: dict['fin'],
+                              acdmy: dict['acdmy'],
+                              it: dict['it'], 
+                              consultant: dict['consultant'],
+                              prgm: dict['prgm'], 
+                              sftTst: dict['sftTst'],
+                              bsnIntel: dict['bsnIntel'],
+                              auto: dict['auto'], 
+                            
                           }).then((response) =>{
-                                  console.log(response);
-                                  // areas of expertise
-                                Axios.post('http://localhost:3001/api/insert/areas-of-expertise/fk=applicant', {
-                                  id: document.getElementById('fdm_id').value,
-                                  comm:  dict['comm'] ,
-                                  confidence: dict['confidence'], 
-                                  timeMng: dict['timeMng'], 
-                                  teamWrk: dict['teamWrk'], 
-                                  ldr: dict['ldr'],
-                                  organisation: dict['ldr'], 
-                                  cldComp: dict['cldComp'], 
-                                  sales: dict['sales'],
-                                  rec: dict['rec'],
-                                  mrkt: dict['mrkt'], 
-                                  hr: dict['hr'],
-                                  fin: dict['fin'],
-                                  acdmy: dict['acdmy'],
-                                  it: dict['it'], 
-                                  consultant: dict['consultant'],
-                                  prgm: dict['prgm'], 
-                                  sftTst: dict['sftTst'],
-                                  bsnIntel: dict['bsnIntel'],
-                                  auto: dict['auto'], 
-                                
-                              }).then((response) =>{
-                                document.getElementById('error-db').innerHTML = "Sign up successful! Thank you for your time."
-                                console.log(response);
-                              });
-                          });                
-                      }
-                    });
-                }
-              });
-
+                            document.getElementById('error-db').innerHTML = "";
+                            console.log(response);
+                          });
+                      });                
+                  }
+                });
             }
           });
+
+        }
+      });
     
     }
 
@@ -314,7 +318,7 @@ export default class MentorSignUp extends Component {
         </div>
         <div className="row">
           <div className="col-6">
-            <input className="form-control" placeholder="Fdm Id" type="fdm_id" name="fdm_id"id="fdm_id" />
+            <input className="form-control" placeholder="Fdm Id" type="fdm_id" name="fdm_id" id="fdm_id"/>
             <small id="error-id" className="form-text text-danger"></small>
           </div>
           <div className="col-6">
