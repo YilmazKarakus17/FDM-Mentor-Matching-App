@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from 'axios';
 import Select from 'react-select';
-import './mentorCss.css';
+import './SignUpPage.css';
 //
 // dependencies: npm add react-select
 //
@@ -308,149 +308,106 @@ export default class MentorSignUp extends Component {
     const { selectedOption7 } = this.state;
 
     return(
-            
-            <div class="container-contact2">
-			          <div class="wrap-contact2"></div>
-                <h2 class="title-big">One step away from becoming a mentor!</h2>
-                  <div>
-                  <br></br><br></br>
-                  <h1 class="small-title">Please fill out the application form</h1>
-                  <br></br>
-                  
-                  <div class="names">First Name</div>
-                  <input className="form" placeholder="First Name" type="text" name="firstname" id="firstname"/>
-                  <small id="error-f" className="alert-box error"></small>
-                  
-                  <div class="names">Last Name</div>
-                  <input className="form" placeholder="Last Name" type="text" name="lastname"id="lastname" />
-                  <small id="error-l" className="alert-box error"></small>
-                  
-                  <div class="names">FDM ID</div>
-                  <input className="form" placeholder="Fdm Id" type="fdm_id" name="fdm_id"id="fdm_id" />
-                  <small id="error-id" className="alert-box error"></small>
-
-                  <div class="names">Password</div>
-                  <input className="form" placeholder="Password" type="password" name="pwd" id="pwd" />
-                  <small id="error-pwd" className="alert-box error"></small>
-
-                  <div class="names">Describe yourself in a few words</div>
-                  <input className="form" placeholder="Description" type="description" name="description" id="description" />
-                  <small id="error-desc" className="alert-box error"></small>
-
-                  <div class="names">Email</div>
-                  <input className="form" placeholder="Email" type="email" name="email" id="email" />
-                  <small id="error-email" className="alert-box error"></small>
-
-                  <div class="names">Contact phone</div>
-                  <input className="form" placeholder="Phone" type="phone" name="phone" id="phone" />
-                  <small id="error-phone" className="alert-box error"></small>
-                  </div>
-                
-                  <br></br><br></br>
-                  <div class="big-names">
-                      Choose three different soft skills that apply to you from the following lists:
-                  </div >
-
-                  <div class="box">
-                    <Select 
-                    //soft skills
-                      value={selectedOption}
-                      onChange={this.handleChange1}
-                      id="changed"
-                      options={options1}
-                    />
-                  </div>
-                  
-                  <br></br>
-
-                <div class="box">
-                  <Select
-                    //soft skills
-                        value={selectedOption3}
-                        onChange={this.handleChange3}
-                        id="changed3"
-                        options={options1}
-                    />
-                 </div>
-                <br></br>
-
-                 <div class="box">
-                    <Select
-                    //soft skills
-                        value={selectedOption4}
-                        onChange={this.handleChange4}
-                        id="changed4"
-                        options={options1}
-                    />
-                </div>
-
-                  <small id="error-soft" className="alert-box error"></small>
-                  <br></br>
-                  <div class="big-names">
-                      Choose two different hard skills that apply to you from the following lists:
-                  </div>
-
-                  <div class="box">
-                      <Select
-                      //hard skills
-                          value={selectedOption2}
-                          onChange={this.handleChange2}
-                          id="changed2"
-                          options={options2}
-                      />
-                  </div>
-                  <br></br>
-
-                  <div class="box">
-                    <Select
-                      //hard skills
-                          value={selectedOption5}
-                          onChange={this.handleChange5}
-                          id="changed5"
-                          options={options2}
-                      />
-                  </div>
-
-                  <br></br><br></br>
-                  <div class="big-names">
-                      Choose two different departments of expertise from the following lists:
-                  </div >
-
-                  <br></br>
-                  <div class="box">
-                    <Select
-                    //department
-                        value={selectedOption6}
-                        onChange={this.handleChange6}
-                        id="changed6"
-                        options={options3}
-                    />
-                  </div>
-                  <br></br>
-
-                  <div class="box">
-                    <Select
-                    //departments
-                        value={selectedOption7}
-                        onChange={this.handleChange7}
-                        id="changed7"
-                        options={options3}
-                    />
-                  </div>
-                
-
-                  <small id="error-hard" className="alert-box error"></small>
-                  <br></br><br></br>
-                  <small id="error-db" className="alert-box error"></small>
-                  <br></br>
-                  <div class="button">
-                      <b onClick={() => this.submitEventHandler()}>Submit</b>
-                  </div>
-                  
-                </div>
-             
-        
-  
+      <div id="signup-content" className="container">
+        <div className="row">
+          <h2 className="col-12">Mentor Application</h2>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input className="form-control" placeholder="Fdm Id" type="fdm_id" name="fdm_id"id="fdm_id" />
+            <small id="error-id" className="form-text text-danger"></small>
+          </div>
+          <div className="col-6">
+            <input className="form-control" placeholder="Password" type="password" name="pwd" id="pwd" />
+            <small id="error-pwd" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input className="form-control" placeholder="First Name" type="text" name="firstname" id="firstname"/>
+            <small id="error-f" className="form-text text-danger"></small>
+          </div>
+          <div className="col-6">
+            <input className="form-control" placeholder="Last Name" type="text" name="lastname"id="lastname" />
+            <small id="error-l" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input className="form-control" placeholder="Email" type="email" name="email" id="email" />
+            <small id="error-email" className="form-text text-danger"></small>
+          </div>
+          <div className="col-6">
+            <input className="form-control" placeholder="Phone" type="phone" name="phone" id="phone" />
+            <small id="error-phone" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <textarea  className="form-control" placeholder="Description" type="description" name="description" id="description"></textarea>
+            <small id="error-desc" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <h5 className="col-12">Choose three soft skills that you are an expert in:</h5>
+        </div>
+        <div className="row soft-skills">
+          <div className="col-12">
+            <Select value={selectedOption} onChange={this.handleChange1} id="changed" options={options1} />
+          </div>
+        </div>
+        <div className="row soft-skills">
+          <div className="col-12">
+            <Select value={selectedOption3} onChange={this.handleChange3} id="changed3" options={options1} />
+          </div>
+        </div>
+        <div className="row soft-skills">
+          <div className="col-12">
+            <Select value={selectedOption4} onChange={this.handleChange4} id="changed4" options={options1} />
+          </div>
+        </div>
+        <div className="row">
+          <small id="error-soft" className="col-12 form-text text-danger"></small>
+        </div>
+        <div className="row">
+          <h5 className="col-12">Choose two different hard skills that you are an expert in:</h5>
+        </div>
+        <div className="row hard-skills">
+          <div className="col-12">
+            <Select value={selectedOption2} onChange={this.handleChange2} id="changed2" options={options2} />
+          </div>
+        </div>
+        <div className="row hard-skills">
+          <div className="col-12">
+            <Select value={selectedOption5} onChange={this.handleChange5} id="changed5" options={options2} />
+          </div>
+        </div>
+        <div className="row">
+          <small id="error-hard" className="col-12 form-text text-danger"></small>
+        </div>
+        <div className="row">
+          <h5 className="col-12">Choose two different departments skills that apply to you:</h5>
+        </div>
+        <div className="row departments">
+          <div className="col-12">
+            <Select value={selectedOption6} onChange={this.handleChange6} id="changed6" options={options3} />
+          </div>
+        </div>
+        <div className="row departments">
+          <div className="col-12">
+            <Select value={selectedOption7} onChange={this.handleChange7} id="changed7" options={options3} />
+          </div>
+        </div>
+        <div className="row">
+          <small id="error-db" className="col-12 form-text text-danger"></small>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <button className="btn btn-primary" onClick={() => this.submitEventHandler()}>Submit Application</button>
+          </div>
+        </div>
+        <div className="row p-1"></div>
+      </div>
     )
   }
 }

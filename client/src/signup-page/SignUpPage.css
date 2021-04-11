@@ -1,0 +1,19 @@
+#signup-content{
+    margin-top: 1em;
+}
+
+#signup-content h2{
+    text-align: center;
+}
+
+#signup-content button{
+    width: 50%;
+    margin-left: 25%;
+}
+
+@media only screen and (max-width:500px){
+    #signup-content button{
+        width: 100%;
+        margin-left: 0%;
+    }
+}

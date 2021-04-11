@@ -1,5 +1,5 @@
 import React from 'react';
-import './Style.css';
+import './LoginPages.css';
 import Axios from 'axios';
 
 export default class StandardLogin extends React.Component{
@@ -56,7 +56,6 @@ export default class StandardLogin extends React.Component{
     render(){
         return(
             <div className='container sign-in-page'>
-                <div className="row p-5"></div>
                 <div className="row">
                     <div className="col-md-6 col-md-offset-6" id="sign-in-form">
                         <h3 className="font-weight-normal">Sign In</h3>
@@ -72,7 +71,6 @@ export default class StandardLogin extends React.Component{
                         </div>
                     </div>
                 </div>
-                <div className="row p-5"></div>
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from 'axios';
 import Select from 'react-select';
-import './mentorCss.css';
+import './SignUpPage.css';
 //
 // dependencies: npm add react-select
 //
