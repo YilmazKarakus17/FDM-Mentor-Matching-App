@@ -153,6 +153,7 @@ export default class MentorSignUp extends Component {
     document.getElementById('error-pwd').innerHTML = ""
     document.getElementById('error-desc').innerHTML = ""
     document.getElementById('error-db').innerHTML = ""
+    document.getElementById('error-dep').innerHTML = ""
 
     // update the dictionary with the final choices of expertise
     dict[this.choice1]=1;  dict[this.choice6]=1;  dict[this.choice5]=1;  dict[this.choice4]=1;   dict[this.choice3]=1; 
@@ -199,7 +200,7 @@ export default class MentorSignUp extends Component {
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
           return
     }else if(document.getElementById('description').value.length <20){
-      document.getElementById('error-desc').innerHTML = "Description requires minimum 20 characters"
+      document.getElementById('error-desc').innerHTML = "Error: Description requires minimum 20 characters"
       console.log("needs at least 20 characters")
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
@@ -208,10 +209,14 @@ export default class MentorSignUp extends Component {
       document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
-    } else if(this.choice2 == this.choice5 ||this.choice2 == this.choice6 || this.choice2 == this.choice7 ||
-      this.choice5 == this.choice6 ||this.choice5 == this.choice7 || this.choice6 == this.choice7){
+    } else if(this.choice2 == this.choice5){
       console.log("Choices are not different (hard)! Please check again.")
       document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(this.choice6 == this.choice7){
+      console.log("Choices are not different (dep)! Please check again.")
+      document.getElementById('error-dep').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else {
@@ -296,10 +301,6 @@ export default class MentorSignUp extends Component {
     
     }
 
-     // console.log("sign up failed")
-    
-    
-  
   }
   
   render(){
@@ -373,6 +374,8 @@ export default class MentorSignUp extends Component {
         <div className="row">
           <small id="error-soft" className="col-12 form-text text-danger"></small>
         </div>
+
+
         <div className="row">
           <h5 className="col-12">Choose two different hard skills that you are an expert in:</h5>
         </div>
@@ -389,6 +392,8 @@ export default class MentorSignUp extends Component {
         <div className="row">
           <small id="error-hard" className="col-12 form-text text-danger"></small>
         </div>
+
+
         <div className="row">
           <h5 className="col-12">Choose two different departments skills that apply to you:</h5>
         </div>
@@ -402,9 +407,16 @@ export default class MentorSignUp extends Component {
             <Select value={selectedOption7} onChange={this.handleChange7} id="changed7" options={options3} />
           </div>
         </div>
+
+        <div className="row">
+          <small id="error-dep" className="col-12 form-text text-danger"></small>
+        </div>
+
         <div className="row">
           <small id="error-db" className="col-12 form-text text-danger"></small>
         </div>
+
+
         <div className="row">
           <div className="col-12">
             <button className="btn btn-primary" onClick={() => this.submitEventHandler()}>Submit Application</button>

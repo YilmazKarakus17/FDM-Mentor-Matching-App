@@ -153,6 +153,7 @@ export default class MentorSignUp extends Component {
     document.getElementById('error-pwd').innerHTML = ""
     document.getElementById('error-desc').innerHTML = ""
     document.getElementById('error-db').innerHTML = ""
+    document.getElementById('error-dep').innerHTML = ""
 
     // update the dictionary with the final choices of expertise
     dict[this.choice1]=1;  dict[this.choice6]=1;  dict[this.choice5]=1;  dict[this.choice4]=1;   dict[this.choice3]=1; 
@@ -160,72 +161,78 @@ export default class MentorSignUp extends Component {
     // verify if its printed out correctly
     console.log(dict)
     let id=document.getElementById('fdm_id').value
-    console.log(id)
+    
     //first validate the fdm_if field
-    if ( document.getElementById('fdm_id').value.length ==0 || !id.includes('@fdm.co.uk')) {
-        // wrong fdm id
+    if (document.getElementById('fdm_id').value.length ==0 || !id.includes('@fdm.co.uk')) {
+          // wrong fdm id
       document.getElementById('error-id').innerHTML = "Error: wrong email format"
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       console.log("wrong fdm email")
+      return
+    }else if (document.getElementById('pwd').value.length ==0 || document.getElementById('pwd').value.length <6){
+      document.getElementById('error-pwd').innerHTML = "Password must be at least 6 characters"
+      console.log("minimum 6 characters")
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
-     // //!(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test('phone'))
-    // if ( document.getElementById('phone').length !=10 ){
-    //   console.log("wrong phone format")
-    //   document.getElementById('error-phone').innerHTML = "Error: Wrong phone number, must pe 10 digits."
-    //   return false
-    // }
-        }else if (document.getElementById('firstname').value.length ==0 || document.getElementById('lastname').value.length<3){
-              console.log("input name")
-              document.getElementById('error-f').innerHTML = "Error: First name or last name empty"
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        }else if (document.getElementById('pwd').value.length ==0 || document.getElementById('pwd').value.length <6){
-              document.getElementById('error-pwd').innerHTML = "Error: Short password, at least 6 characters"
-              console.log("minimum 6 characters")
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        }else if(document.getElementById('description').value.length <20){
-              document.getElementById('error-desc').innerHTML = "Error: Failed! Short description"
-              console.log("needs at least 20 characters")
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        }else if(document.getElementById('phone').value.length <10 || document.getElementById('phone').value.length >11){
-              document.getElementById('error-phone').innerHTML = "Error: Failed! Invalid phone number"
-              console.log("needs at least 20 characters")
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-        } else if(document.getElementById('email').value.length !=0 && !document.getElementById('email').value.includes('@')){
-          console.log("invalid email address")
-          document.getElementById('error-email').innerHTML = "Error: Wrong email format?"
+    }else if (document.getElementById('firstname').value.length ==0){
+          console.log("input name")
+          document.getElementById('error-f').innerHTML = "First Name Required"
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-          return 
-        } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || this.choice3 == this.choice4){
-          <br></br>
-          console.log("Choices are not different (soft)! Please check again.")
-          document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
+          return
+    }else if (document.getElementById('lastname').value.length<3){
+      console.log("input name")
+      document.getElementById('error-l').innerHTML = "Last Name Required"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return
+    } else if(document.getElementById('email').value.length ==0){
+      console.log("invalid email address")
+      document.getElementById('error-email').innerHTML = "Email Address Required"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(document.getElementById('email').value.length !=0 && !document.getElementById('email').value.includes('@')){
+      console.log("invalid email address")
+      document.getElementById('error-email').innerHTML = "Wrong Email Format"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    }else if(document.getElementById('phone').value.length <10 || document.getElementById('phone').value.length >11){
+          document.getElementById('error-phone').innerHTML = "Invalid Phone Number"
+          console.log("needs at least 20 characters")
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-          return 
-        } else if(this.choice2 == this.choice5 ||this.choice2 == this.choice6 || this.choice2 == this.choice7 ||
-          this.choice5 == this.choice6 ||this.choice5 == this.choice7 || this.choice6 == this.choice7){
-            <br></br>
-          console.log("Choices are not different (hard)! Please check again.")
-          document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
+          return
+    }else if(document.getElementById('description').value.length <20){
+      document.getElementById('error-desc').innerHTML = "Error: Description requires minimum 20 characters"
+      console.log("needs at least 20 characters")
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || this.choice3 == this.choice4){
+      console.log("Choices are not different (soft)! Please check again.")
+      document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(this.choice2 == this.choice5){
+      console.log("Choices are not different (hard)! Please check again.")
+      document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else if(this.choice6 == this.choice7){
+      console.log("Choices are not different (dep)! Please check again.")
+      document.getElementById('error-dep').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return 
+    } else {
+      
+      Axios.get(`http://localhost:3001/api/get/fdm-emails/check-exists/${id}`).then((response) => {
+        console.log("nice", response.data.length)
+        
+        if (response.data.length==0){
+          //doesnt exist in database
+          document.getElementById('error-id').innerHTML = "Invalid FDM Email"
+          console.log("id does not exists")
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
           return 
         } else {
-          
-          Axios.get(`http://localhost:3001/api/get/fdm-emails/check-exists/${id}`).then((response) => {
-            console.log("nice", response.data.length)
-            
-            if (response.data.length==0){
-              //fdm email doesnt exist in database
-              document.getElementById('error-id').innerHTML = "Error: this fdm id does not exist"
-              console.log("id does not exists")
-              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-              return 
-            } else {
 
-              Axios.get(`http://localhost:3001/api/get/mentee/check-exists/${id}`).then((response) => {
+          Axios.get(`http://localhost:3001/api/get/mentee/check-exists/${id}`).then((response) => {
                       console.log("mehhh", response.data.length)
                       if (response.data.length==1){
                         //mentee exists
@@ -277,9 +284,11 @@ export default class MentorSignUp extends Component {
               });      
                   }
               });
-            }
-          });
+        }
+      });
+    
     }
+
   }
   
   render(){
@@ -292,151 +301,116 @@ export default class MentorSignUp extends Component {
     const { selectedOption7 } = this.state;
 
     return(
-            
-            <div class="container-contact2">
-			          <div class="wrap-contact2"></div>
-                <h2 class="title-big">One step away from joining our community!</h2>
-                  <div>
-                  <br></br><br></br>
-                  <h1 class="small-title">Please fill out the application form</h1>
-                  <br></br>
-                  
-                  <div class="names">First Name</div>
-                  <input className="form" placeholder="First Name" type="text" name="firstname" id="firstname"/>
-                  <small id="error-f" className="alert-box"></small>
-                  
-                  <div class="names">Last Name</div>
-                  <input className="form" placeholder="Last Name" type="text" name="lastname"id="lastname" />
-                  <small id="error-l" className="alert-box"></small>
-                  
-                  <div class="names">FDM Email</div>
-                  <input className="form" placeholder="Fdm Id" type="fdm_id" name="fdm_id"id="fdm_id" />
-                  <small id="error-id" className="alert-box"></small>
+      <div id="signup-content" className="container">
+        <div className="row">
+          <h2 className="col-12">Mentee Sign Up</h2>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input className="form-control" placeholder="Fdm Email" type="fdm_id" name="fdm_id" id="fdm_id"/>
+            <small id="error-id" className="form-text text-danger"></small>
+          </div>
+          <div className="col-6">
+            <input className="form-control" placeholder="Password" type="password" name="pwd" id="pwd" />
+            <small id="error-pwd" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input className="form-control" placeholder="First Name" type="text" name="firstname" id="firstname"/>
+            <small id="error-f" className="form-text text-danger"></small>
+          </div>
+          <div className="col-6">
+            <input className="form-control" placeholder="Last Name" type="text" name="lastname"id="lastname" />
+            <small id="error-l" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input className="form-control" placeholder="Email" type="email" name="email" id="email" />
+            <small id="error-email" className="form-text text-danger"></small>
+          </div>
+          <div className="col-6">
+            <input className="form-control" placeholder="Phone" type="phone" name="phone" id="phone" />
+            <small id="error-phone" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <textarea  className="form-control" placeholder="Description" type="description" name="description" id="description"></textarea>
+            <small id="error-desc" className="form-text text-danger"></small>
+          </div>
+        </div>
+        <div className="row">
+          <h5 className="col-12"> Choose three different soft skills that you would like to improve from the following lists:</h5>
+        </div>
+        <div className="row soft-skills">
+          <div className="col-12">
+            <Select value={selectedOption} onChange={this.handleChange1} id="changed" options={options1} />
+          </div>
+        </div>
+        <div className="row soft-skills">
+          <div className="col-12">
+            <Select value={selectedOption3} onChange={this.handleChange3} id="changed3" options={options1} />
+          </div>
+        </div>
+        <div className="row soft-skills">
+          <div className="col-12">
+            <Select value={selectedOption4} onChange={this.handleChange4} id="changed4" options={options1} />
+          </div>
+        </div>
+        <div className="row">
+          <small id="error-soft" className="col-12 form-text text-danger"></small>
+        </div>
 
-                  <div class="names">Password</div>
-                  <input className="form" placeholder="Password" type="password" name="pwd" id="pwd" />
-                  <small id="error-pwd" className="alert-box"></small>
 
-                  <div class="names">Describe yourself in a few words</div>
-                  <input className="form" placeholder="Description" type="description" name="description" id="description" />
-                  <small id="error-desc" className="alert-box"></small>
+        <div className="row">
+          <h5 className="col-12"> Choose two different hard skills that you would like to improve from the following lists:</h5>
+        </div>
+        <div className="row hard-skills">
+          <div className="col-12">
+            <Select value={selectedOption2} onChange={this.handleChange2} id="changed2" options={options2} />
+          </div>
+        </div>
+        <div className="row hard-skills">
+          <div className="col-12">
+            <Select value={selectedOption5} onChange={this.handleChange5} id="changed5" options={options2} />
+          </div>
+        </div>
+        <div className="row">
+          <small id="error-hard" className="col-12 form-text text-danger"></small>
+        </div>
 
-                  <div class="names">Personal Email</div>
-                  <input className="form" placeholder="Email" type="email" name="email" id="email" />
-                  <small id="error-email" className="alert-box"></small>
 
-                  <div class="names">Contact phone</div>
-                  <input className="form" placeholder="Phone" type="phone" name="phone" id="phone" />
-                  <small id="error-phone" className="alert-box"></small>
-                  </div>
-                
-                  <br></br><br></br>
-                  <div class="big-names">
-                      Choose three different soft skills that you would like to improve from the following lists:
-                  </div >
+        <div className="row">
+          <h5 className="col-12">Choose two different departments of improvement from the following lists:</h5>
+        </div>
+        <div className="row departments">
+          <div className="col-12">
+            <Select value={selectedOption6} onChange={this.handleChange6} id="changed6" options={options3} />
+          </div>
+        </div>
+        <div className="row departments">
+          <div className="col-12">
+            <Select value={selectedOption7} onChange={this.handleChange7} id="changed7" options={options3} />
+          </div>
+        </div>
 
-                  <div class="box">
-                    <Select 
-                    //soft skills
-                      value={selectedOption}
-                      onChange={this.handleChange1}
-                      id="changed"
-                      options={options1}
-                    />
-                  </div>
-                  
-                  <br></br>
+        <div className="row">
+          <small id="error-dep" className="col-12 form-text text-danger"></small>
+        </div>
 
-                <div class="box">
-                  <Select
-                    //soft skills
-                        value={selectedOption3}
-                        onChange={this.handleChange3}
-                        id="changed3"
-                        options={options1}
-                    />
-                 </div>
-                <br></br>
+        <div className="row">
+          <small id="error-db" className="col-12 form-text text-danger"></small>
+        </div>
 
-                 <div class="box">
-                    <Select
-                    //soft skills
-                        value={selectedOption4}
-                        onChange={this.handleChange4}
-                        id="changed4"
-                        options={options1}
-                    />
-                </div>
 
-                  <small id="error-soft" className="alert-box"></small>
-                  <br></br><br></br>
-                  <div class="big-names">
-                      Choose two different hard skills that you would like to improve from the following lists:
-                  </div>
-
-                  <div class="box">
-                      <Select
-                      //hard skills
-                          value={selectedOption2}
-                          onChange={this.handleChange2}
-                          id="changed2"
-                          options={options2}
-                      />
-                  </div>
-                  <br></br>
-
-                  <div class="box">
-                    <Select
-                      //hard skills
-                          value={selectedOption5}
-                          onChange={this.handleChange5}
-                          id="changed5"
-                          options={options2}
-                      />
-                  </div>
-
-                  <small id="error-soft" className="alert-box"></small>
-
-                  <br></br><br></br>
-                  <div class="big-names">
-                      Choose two different departments of improvement from the following lists:
-                  </div >
-
-                  <br></br>
-                  <div class="box">
-                    <Select
-                    //department
-                        value={selectedOption6}
-                        onChange={this.handleChange6}
-                        id="changed6"
-                        options={options3}
-                    />
-                  </div>
-                  <br></br>
-
-                  <div class="box">
-                    <Select
-                    //department
-                        value={selectedOption7}
-                        onChange={this.handleChange7}
-                        id="changed7"
-                        options={options3}
-                    />
-                  <br></br>
-                  </div>
-
-                  <small id="error-hard" className="alert-box"></small>
-                  <br></br><br></br>
-                  <small id="error-db" className="alert-box"></small>
-                  <br></br>
-                  <div class="button">
-                      <b onClick={() => this.submitEventHandler()}>Submit</b>
-                  </div>
-                  
-                </div>
-             
-        
-  
+        <div className="row">
+          <div className="col-12">
+            <button className="btn btn-primary" onClick={() => this.submitEventHandler()}>Submit</button>
+          </div>
+        </div>
+      </div>
     )
   }
 }
