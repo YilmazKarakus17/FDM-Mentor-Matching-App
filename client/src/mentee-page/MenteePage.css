@@ -1,0 +1,24 @@
+/* ============= Styling the component headings ============= */
+#mentee-page-content h2{
+    text-align: center;
+}
+
+#mentee-page-content h5{
+    margin-top: 1em;
+    margin-bottom: 0%;
+    text-align: left;
+}
+
+/* ============= Styling the mentors details ============= */
+/* Styling the card headers */
+#mentor-details .card-header{
+    font-size: 1.75em;
+    font-weight: 500;
+    border: none;
+    background-color: #f0ebe1;
+    color: dimgray;
+}
+
+#mentor-details .card-header:hover{
+    background-color: #e9dfcb;
+}

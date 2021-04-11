@@ -126,7 +126,8 @@ export default class SearchMentor extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className="container">
+                <h3 style={{width:"100%",textAlign:"center"}}>Your Top 5 Matches</h3>
                 {this.state.topMatches.map(match => {
                     return(
                         <SelectMentor key={match.fdmId} fdmId={match.fdmId} menteeFdmEmail={this.state.fdmEmail} matchPercentage={match.match}/>

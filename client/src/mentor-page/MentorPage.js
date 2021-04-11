@@ -136,7 +136,7 @@ export default class MentorPage extends React.Component{
                                                                     <th scope="row">Email</th>
                                                                     <td><a href={"mailto:" + mentee.email}>{mentee.email}</a></td>
                                                                     <th>Phone</th>
-                                                                    <td>{mentee.phone}</td>
+                                                                    <td><a href={"tel:" + mentee.phone}>{mentee.phone}</a></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

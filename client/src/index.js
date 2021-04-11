@@ -10,9 +10,9 @@ import MentorSignUp from './signup-page/MentorSignUp'
 import SearchMentor from './mentee-page/SearchMentor'
 import MentorPage from './mentor-page/MentorPage'
 import SelectMentor from './mentee-page/SelectMentor'
-
+import MenteePage from './mentee-page/MenteePage'
 ReactDOM.render(
-    <SearchMentor fdmEmail="fdm0001@fdm.co.uk" />,
+    <MenteePage fdmEmail="fdm0006@fdm.co.uk" />,
   document.getElementById('root')
 );
 
