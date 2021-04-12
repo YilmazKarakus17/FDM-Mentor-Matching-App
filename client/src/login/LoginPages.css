@@ -1,30 +1,45 @@
-/* Styling the main sign in page container */
-.sign-in-page{
-    margin-top: 5em;
-    margin-bottom: 5em;
+/* ============= Styling the main sign in page ============= */
+#sign-in-page{
+    margin-top: 13.25em;
+    margin-bottom: 23.25em;
 }
 
+/* Making the margins responsive*/
+@media only screen and (max-width: 1200px){
+    #sign-in-page{
+        margin-top: 5em;
+        margin-bottom: 10em;
+    }
+    @media only screen and (max-width: 500px){
+        #sign-in-page{
+            margin-top: 5em;
+            margin-bottom: 10em;
+        }
+    }
+}
+
+/* ============= Styling the containers ============= */
+.container{
+    height: 100%;
+}
+
+/* ============= Styling the heading of the sign in page =============*/
 #sign-in-form h3{
     text-align: center;
 }
 
-#sign-in-page{
-    height: 100%;
-    vertical-align: middle;
-}
-
+/* ============= Styling the form container of the sign in page =============*/
 #sign-in-form{
     width: 100%;
     margin: auto;
     vertical-align: middle;
 }
 
+/* ============= Styling the sign in page error message ============= */
 .text-danger{
     width: 100%;
     text-align: center;
     font-size: medium;
     padding-bottom: 2%;
 }
-.container{
-    height: 100%;
-}
+

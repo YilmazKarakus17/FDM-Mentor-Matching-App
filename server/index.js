@@ -189,6 +189,7 @@ app.delete('/api/delete/application/:id', (req,res) => {
 
 
 /****************************** Routes used to update data ******************************/
+                        /*============== Mentee Table ===========*/
 // Route Definition: Updates an entry from the mentee table to set the mentor id to point to a mentor entry 
 app.put('/api/update/mentee/mentor-id', (req,res) =>{
     const sql = "UPDATE mentee SET mentor_id = ? WHERE fdm_email = ?";
@@ -199,6 +200,106 @@ app.put('/api/update/mentee/mentor-id', (req,res) =>{
     });
 });
 
+// Route Definition: Updates the first name attribute of an entry from the mentee table
+app.put('/api/update/mentee/firstname', (req,res) =>{
+    const sql = "UPDATE mentee SET firstname = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.firstname, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the last name attribute of an entry from the mentee table
+app.put('/api/update/mentee/lastname', (req,res) =>{
+    const sql = "UPDATE mentee SET lastname = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.lastname, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the description attribute of an entry from the mentee table
+app.put('/api/update/mentee/description', (req,res) =>{
+    const sql = "UPDATE mentee SET description = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.description, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the email attribute of an entry from the mentee table
+app.put('/api/update/mentee/email', (req,res) =>{
+    const sql = "UPDATE mentee SET email = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.email, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the phone attribute of an entry from the mentee table
+app.put('/api/update/mentee/phone', (req,res) =>{
+    const sql = "UPDATE mentee SET phone = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.phone, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+                        /*============== Mentor Table ===========*/
+// Route Definition: Updates the first name attribute of an entry from the mentor table
+app.put('/api/update/mentor/firstname', (req,res) =>{
+    const sql = "UPDATE mentor SET firstname = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.firstname, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the last name attribute of an entry from the mentor table
+app.put('/api/update/mentor/lastname', (req,res) =>{
+    const sql = "UPDATE mentor SET lastname = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.lastname, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the description attribute of an entry from the mentor table
+app.put('/api/update/mentor/description', (req,res) =>{
+    const sql = "UPDATE mentor SET description = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.description, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the email attribute of an entry from the mentor table
+app.put('/api/update/mentor/email', (req,res) =>{
+    const sql = "UPDATE mentor SET email = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.email, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// Route Definition: Updates the phone attribute of an entry from the mentor table
+app.put('/api/update/mentor/phone', (req,res) =>{
+    const sql = "UPDATE mentor SET phone = ? WHERE fdm_email = ?";
+    conn.query(sql, [req.body.phone, req.body.fdmEmail], (err, result) => {
+        if (err) res.send(err);
+        console.log(result);
+        res.send(result)
+    });
+});
 
 /****************************** Routes used to create data ******************************/
 

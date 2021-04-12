@@ -1,18 +1,34 @@
-/* Styling the containers */
+/* ============= Styling the containers =============*/
+/* Styling the main container */
 #mentor-page-content{
     min-width: 100%;
     max-width: 100%;
     margin: auto;
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
+    margin-top: 2em;
+    margin-bottom: 11em;
 }
-  
+
+/* Styling the container */
 #mentor-page-content .container{
     min-width: 75%;
     max-width: 75%;
     margin: auto;
     margin-top: 0.25em;
     margin-bottom: 0.25em;
+}
+
+/* Making the main container responsive */
+@media only screen and (max-width: 1500px){
+    #mentor-page-content{
+        margin-top: 1em;
+        margin-bottom: 5em;
+    }
+    @media only screen and (max-width: 500px){
+        #mentor-page-content{
+            margin-top: 1em;
+            margin-bottom: 2em;
+        }
+    }
 }
 
 /* Making the containers responsive */
@@ -36,8 +52,7 @@
 }
 
 
-
-/* Styling the headings */
+/* ============= Styling the headings ============= */
 #mentor-page-content h2{
     text-align: center;
 }

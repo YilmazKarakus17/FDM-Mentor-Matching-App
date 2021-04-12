@@ -55,7 +55,7 @@ export default class StandardLogin extends React.Component{
 
     render(){
         return(
-            <div className='container sign-in-page'>
+            <div id="sign-in-page" className='container'>
                 <div className="row">
                     <div className="col-md-6 col-md-offset-6" id="sign-in-form">
                         <h3 className="font-weight-normal">Sign In</h3>

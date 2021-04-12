@@ -1,10 +1,36 @@
+/* ============= Styling the main container ============= */
+#mentee-page-content{
+    margin-top: 2em;
+    margin-bottom: 10em;
+}
+
+/* Making the main container responsive */
+@media only screen and (max-width: 1500px){
+    #mentee-page-content{
+        margin-top: 2em;
+        margin-bottom: 5em;
+    }
+    @media only screen and (max-width: 500px){
+        #mentee-page-content{
+            margin-top: 2em;
+            margin-bottom: 7.5em;
+        }
+        @media only screen and (max-width: 400px){
+            #mentee-page-content{
+                margin-top: 2em;
+                margin-bottom: 7em;
+            }
+        }
+    }
+}
+
 /* ============= Styling the component headings ============= */
 #mentee-page-content h2{
     text-align: center;
 }
 
 #mentee-page-content h5{
-    margin-top: 1em;
+    margin-top: 2em;
     margin-bottom: 0%;
     text-align: left;
 }
@@ -22,3 +48,5 @@
 #mentor-details .card-header:hover{
     background-color: #e9dfcb;
 }
+
+/* ============= Styling  ============= */
