@@ -91,11 +91,11 @@ function TechnicianPage () {
                             <h1 className="col-6" style={{textAlign:"right"}}>{val.fdm_id}</h1>
                         </div>
                         <div className="row">
-                            <p className="col-6" style={{textAlign:"left"}}>Email: {val.email} </p>
-                            <p className="col-6" style={{textAlign:"left"}}>Phone: {val.phone} </p>
+                            <p className="col-6">Email: {val.email} </p>
+                            <p className="col-6">Phone: {val.phone} </p>
                         </div>
                         <div className="row">
-                            <p className="col-12" style={{textAlign:"left"}}>Description: {val.description} </p>
+                            <p className="col-12`" id="applicant-description">Description: {val.description} </p>
                         </div>
                         <div className="button-container row">
                             <button id="generate-button" type="button" onClick={() => {generateApplication(val.fdm_id, val.firstname, val.email)}}>Generate</button>

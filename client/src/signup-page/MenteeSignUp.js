@@ -159,7 +159,6 @@ export default class MentorSignUp extends Component {
     dict[this.choice1]=1;  dict[this.choice6]=1;  dict[this.choice5]=1;  dict[this.choice4]=1;   dict[this.choice3]=1; 
     dict[this.choice2]=1;  dict[this.choice7]=1; 
     // verify if its printed out correctly
-    console.log(dict)
     let id=document.getElementById('fdm_id').value
     
     //first validate the fdm_if field
@@ -167,82 +166,71 @@ export default class MentorSignUp extends Component {
           // wrong fdm id
       document.getElementById('error-id').innerHTML = "Error: wrong email format"
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-      console.log("wrong fdm email")
       return
     }else if (document.getElementById('pwd').value.length ==0 || document.getElementById('pwd').value.length <6){
       document.getElementById('error-pwd').innerHTML = "Password must be at least 6 characters"
-      console.log("minimum 6 characters")
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     }else if (document.getElementById('firstname').value.length ==0){
-          console.log("input name")
-          document.getElementById('error-f').innerHTML = "First Name Required"
-          document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-          return
+      document.getElementById('error-f').innerHTML = "First Name Required"
+      document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+      return
     }else if (document.getElementById('lastname').value.length<3){
-      console.log("input name")
       document.getElementById('error-l').innerHTML = "Last Name Required"
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return
     } else if(document.getElementById('email').value.length ==0){
-      console.log("invalid email address")
       document.getElementById('error-email').innerHTML = "Email Address Required"
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else if(document.getElementById('email').value.length !=0 && !document.getElementById('email').value.includes('@')){
-      console.log("invalid email address")
       document.getElementById('error-email').innerHTML = "Wrong Email Format"
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     }else if(document.getElementById('phone').value.length <10 || document.getElementById('phone').value.length >11){
           document.getElementById('error-phone').innerHTML = "Invalid Phone Number"
-          console.log("needs at least 20 characters")
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
           return
     }else if(document.getElementById('description').value.length <20){
       document.getElementById('error-desc').innerHTML = "Error: Description requires minimum 20 characters"
-      console.log("needs at least 20 characters")
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || this.choice3 == this.choice4){
-      console.log("Choices are not different (soft)! Please check again.")
       document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else if(this.choice2 == this.choice5){
-      console.log("Choices are not different (hard)! Please check again.")
       document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else if(this.choice6 == this.choice7){
-      console.log("Choices are not different (dep)! Please check again.")
       document.getElementById('error-dep').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else {
-      
       Axios.get(`http://localhost:3001/api/get/fdm-emails/check-exists/${id}`).then((response) => {
-        console.log("nice", response.data.length)
-        
         if (response.data.length==0){
           //doesnt exist in database
           document.getElementById('error-id').innerHTML = "Invalid FDM Email"
           console.log("id does not exists")
           document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
           return 
-        } else {
-
+        } 
+        else 
+        {
           Axios.get(`http://localhost:3001/api/get/mentee/check-exists/${id}`).then((response) => {
-                      console.log("mehhh", response.data.length)
-                      if (response.data.length==1){
-                        //mentee exists
-                        document.getElementById('error-id').innerHTML = "Error: Mentee already registered"
-                        console.log("mentee already exists")
-                        document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
-                        return 
-                      } else{
-                          //post everything
-                          //post everything
+            console.log("mehhh", response.data.length)
+            if (response.data.length==1){
+              //mentee exists
+              document.getElementById('error-id').innerHTML = "Error: Mentee already registered"
+              console.log("mentee already exists")
+              document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
+              return 
+            } 
+            else
+            {
+              //post everything
+              //post everything
               Axios.post('http://localhost:3001/api/insert/mentee',{
                 fdmEmail: document.getElementById('fdm_id').value,
                 pwd: document.getElementById('pwd').value,
@@ -253,10 +241,9 @@ export default class MentorSignUp extends Component {
                 email: document.getElementById('email').value,
                 phone: document.getElementById('phone').value,
               }).then((response) =>{
-                      console.log(response);
-                      // areas of expertise
-                    Axios.post('http://localhost:3001/api/insert/areas-of-expertise/fk=applicant', {
-                      id: document.getElementById('fdm_id').value,
+                    // areas of expertise
+                    Axios.post('http://localhost:3001/api/insert/areas-of-improvement', {
+                      fdmEmail: document.getElementById('fdm_id').value,
                       comm:  dict['comm'] ,
                       confidence: dict['confidence'], 
                       timeMng: dict['timeMng'], 
@@ -279,16 +266,13 @@ export default class MentorSignUp extends Component {
                     
                   }).then((response) =>{
                     document.getElementById('error-db').innerHTML = "Sign up successful! Thank you for your time."
-                    console.log(response);
                   });
-              });      
-                  }
-              });
+                });      
+            }
+          });
         }
       });
-    
     }
-
   }
   
   render(){
