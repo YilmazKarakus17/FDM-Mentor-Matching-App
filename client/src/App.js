@@ -13,6 +13,8 @@ import LandingPage from './LandingPage'
 import MentorSignUp from './signup-page/MentorSignUp'
 import MenteeSignUp from './signup-page/MenteeSignUp'
 import TechnicianPage from './technician-page/TechnicianPage'
+import MentorPage from './mentor-page/MentorPage'
+import MenteePage from './mentee-page/MenteePage'
 
 //Importing styling
 import './App.css';
@@ -59,6 +61,15 @@ export default class App extends React.Component{
     ReactDOM.render(<TechnicianPage />, document.getElementById('page-content'));
   }
 
+  //Method used to change the current page content to be the mentor page
+  mentorPageRedirect = (fdmId) => {
+    ReactDOM.render(<MentorPage fdmId={fdmId} />, document.getElementById('page-content'));
+  }
+
+  //Method used to change the current page content to be the mentee page
+  menteePageRedirect = (fdmEmail) => {
+    ReactDOM.render(<MenteePage fdmEmail={fdmEmail} />, document.getElementById('page-content'));
+  }
 
   //Method re renders a Nav component into the DOM
   renderNav = () => {
@@ -72,13 +83,15 @@ export default class App extends React.Component{
   loadPageContent = () => {
     if (("fdmEmail" in localStorage) && ("pwd" in localStorage))
     {
+      let fdmEmail = localStorage.getItem("fdmEmail");
+      let pwd = localStorage.getItem("pwd");
       Axios.post('http://localhost:3001/api/get/mentee/credentials-check', {
-        fdmEmail: localStorage.getItem("fdmEmail"),
-        pwd: localStorage.getItem("pwd")
+        fdmEmail: fdmEmail,
+        pwd: pwd
       }).then((response) => {
         if (response.data.match){
           this.refs.Nav.createLogoutButton();
-          alert("Mentee logged In")
+          this.menteePageRedirect(fdmEmail);
         }
         else{
           this.landingPage();
@@ -87,18 +100,20 @@ export default class App extends React.Component{
       });
     }
     else if (("id" in localStorage) && ("pwd" in localStorage)){
+      let fdmId = localStorage.getItem("id");
+      let pwd = localStorage.getItem("pwd");
       Axios.post('http://localhost:3001/api/get/mentor/credentials-check', {
-        id: localStorage.getItem("id"),
-        pwd: localStorage.getItem("pwd")  
+        id: fdmId,
+        pwd: pwd  
       }).then((response) => {
         if (response.data.match){
           this.refs.Nav.createLogoutButton();
-          alert("mentor signed in")
+          this.mentorPageRedirect(fdmId)
         }
         else{
           Axios.post('http://localhost:3001/api/get/technician/credentials-check', {
-            id: localStorage.getItem("id"),
-            pwd: localStorage.getItem("pwd") 
+            id: fdmId,
+            pwd: pwd 
           }).then((response) => {
             if (response.data.match){
               this.refs.Nav.createLogoutButton();

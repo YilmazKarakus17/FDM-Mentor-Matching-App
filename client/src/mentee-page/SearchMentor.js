@@ -16,14 +16,19 @@ export default class SearchMentor extends React.Component{
         super(props);
         this.state = {
             fdmEmail: this.props.fdmEmail,
-            topMatches: []
+            topMatches: [],
+            reloadContent: this.props.reloadContent
         }
+    }
+
+    reloadMenteePage = () => {
+        this.state.reloadContent();
     }
 
     //Function returns true if the response confirms nothing went wrong
     validateResponse = (response) => {
         if (response.data.code === "ECONNREFUSED"){
-            alert("API cannot connect to the servers");
+            alert("API Request Failed: server cannot connect to the database");
             return false;
         }
         return true;
@@ -130,7 +135,7 @@ export default class SearchMentor extends React.Component{
                 <h3 style={{width:"100%",textAlign:"center"}}>Your Top 5 Matches</h3>
                 {this.state.topMatches.map(match => {
                     return(
-                        <SelectMentor key={match.fdmId} fdmId={match.fdmId} menteeFdmEmail={this.state.fdmEmail} matchPercentage={match.match}/>
+                        <SelectMentor key={match.fdmId} reloadMenteePage={this.reloadMenteePage} fdmId={match.fdmId} menteeFdmEmail={this.state.fdmEmail} matchPercentage={match.match}/>
                     )
                 })}
             </div>

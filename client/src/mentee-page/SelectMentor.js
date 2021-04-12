@@ -14,12 +14,12 @@ export default class SelectMentor extends React.Component{
             fdmId: this.props.fdmId,
             matchPercentage: this.props.matchPercentage,
             mentorDetails: {},
+            reloadMenteePage: this.props.reloadMenteePage,
             collapse: true,
             isOpen: false,
-            hi: 'hi',
+            hi: 'hi'
         };
         this.toggleCollapse = this.toggleCollapse.bind(this)
-        console.log(this.state.matchPercentage)
       }
       toggleCollapse(){
         this.setState({
@@ -29,14 +29,43 @@ export default class SelectMentor extends React.Component{
       }
 
 
+    validateResponse = (response) => {
+        if(response.data.code === "ECONNREFUSED"){
+            alert("API cannot connect to the database");
+            return false;
+        }
+        if(response.data.affectedRows == 0){
+            alert("Unable to Make the changes");
+            return false;
+        }
+        if(response.data.code === "ER_NO_REFERENCED_ROW_2"){
+            alert("Error: Invalid FDM Id for mentor");
+            return false;
+        }
+        return true;
+    }
+
+    //Does API call to set the mentees mentor as the current mentor
+    selectMentor = () => {
+        Axios.put('http://localhost:3001/api/update/mentee/mentor-id',{
+            fdmEmail: this.state.menteeFdmEmail,
+            mentorId: this.state.fdmId
+        }).then((response) => {
+            console.log(response);
+            if (this.validateResponse(response)){
+                this.state.reloadMenteePage()
+            }
+        });
+    }
+
     componentWillMount(){
         Axios.get(`http://localhost:3001/api/get/mentor/${this.state.fdmId}`).then((response) => {
-                console.log(response)
                 this.setState({
                     mentorDetails: response.data[0]
                 })
         });
     }
+
 
     render(){
         const {collapse} = this.state;
@@ -60,7 +89,7 @@ export default class SelectMentor extends React.Component{
                 </button>;
         }
         return (
-          <div class="select-mentor-container">
+          <div className="select-mentor-container">
             <ClickAwayListener
                 mouseEvent="onMouseDown"
                 touchEvent="onTouchStart"
@@ -77,7 +106,7 @@ export default class SelectMentor extends React.Component{
                                     <p>Match Percentage: {matchPercentage}</p>
                                     <p>{this.state.mentorDetails.description}</p>
                                     <p><a href={"mailto:"+this.state.mentorDetails.email}>{this.state.mentorDetails.email}</a></p>
-                                    <button className="accept" /*onClick={}*/ >Select Mentor</button >
+                                    <button className="accept" onClick={() => this.selectMentor()} >Select Mentor</button >
                                 </div>
                             </div>}
                         </CSSTransitionGroup>

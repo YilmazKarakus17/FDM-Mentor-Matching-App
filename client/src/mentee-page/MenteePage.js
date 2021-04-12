@@ -47,13 +47,17 @@ export default class MenteePage extends React.Component{
     //Function returns true if the API response confirms the request was successful
     validateResponse = (response) => {
         if (response.data.code === "ECONNREFUSED"){
-            alert("API cannot connect to the servers");
+            alert("API cannot connect to the database");
             return false;
         }
         if (response.data.length == 0){
             alert("Unable to load mentee details: fdm Email doesn't exist in the database")
         }
         return true;
+    }
+
+    reloadContent = () =>{
+        window.location.reload();
     }
 
     componentWillMount(){
@@ -108,7 +112,7 @@ export default class MenteePage extends React.Component{
         }
         else{
             pageContent = 
-                <SearchMentor fdmEmail={this.state.fdmEmail} />
+                <SearchMentor reloadContent={this.reloadContent} fdmEmail={this.state.fdmEmail} />
         }
         return(
             <div id="mentee-page-content" className="container">

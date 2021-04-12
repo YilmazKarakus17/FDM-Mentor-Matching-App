@@ -17,18 +17,17 @@ export default class LandingPage extends React.Component{
 
     render(){
         return(
-            <div className="landing-page">
-                <div className="row p-1"></div>
+            <div id="landing-page">
                 <button className="landing-page-buttons" onClick={() => this.state.mentorApplicationRedirect()}>
-                    <h5>Mentor Application</h5>
+                    <h5 className="button-headings">Mentor Application</h5>
                     <img className="button-icons" src={ApplicationIcon} alt="Mentor Application Button Icon"/>
                 </button>
                 <button className="landing-page-buttons" onClick={() => this.state.standardLoginRedirect()}>
-                    <h5>Sign In</h5>
+                    <h5 className="button-headings">Sign In</h5>
                     <img className="button-icons" src={PadlockIcon} alt="Sign In Button Icon"/>
                 </button>
                 <button className="landing-page-buttons" onClick={() => this.state.menteeSignUpRedirect()}> 
-                    <h5>Mentee Signup</h5>
+                    <h5 className="button-headings">Mentee Signup</h5>
                     <img className="button-icons" src={SignUpIcon} alt="Mentee Signup Button Icon"/>
                 </button>
                 <div className="row p-1"></div>

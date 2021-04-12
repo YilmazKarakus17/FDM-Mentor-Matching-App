@@ -39,24 +39,33 @@ export default class MentorPage extends React.Component{
         });
     }
 
-    //Function returns true if the API response confirms the request was successful
-    validateResponse = (response) => {
+    //Function returns true if the API response confirms the request to get mentors details was successful
+    validateGetMentorResponse = (response) => {
         if (response.data.code === "ECONNREFUSED"){
-            alert("API cannot connect to the servers");
+            alert("API cannot connect to the database");
             return false;
         }
         if (response.data.length == 0){
-            alert("Unable to load mentee details: fdm id doesn't exist in the database")
+            alert("Unable to load mentor details: fdm id doesn't exist in the database")
+        }
+        return true;
+    }
+
+    //Function returns true if the API response confirms the request to get the mentees was successful
+    validateGetMenteesResponse = (response) => {
+        if (response.data.code === "ECONNREFUSED"){
+            alert("API cannot connect to the database");
+            return false;
         }
         return true;
     }
 
     componentWillMount(){
         Axios.get(`http://localhost:3001/api/get/mentor/${this.state.fdmId}`).then((response) => {
-            if (this.validateResponse(response)){
+            if (this.validateGetMentorResponse(response)){
                 this.setMentorDetails(response.data[0])
                 Axios.get(`http://localhost:3001/api/get/mentor/mentees/${this.state.fdmId}`).then((response) => {
-                    if (this.validateResponse(response)){
+                    if (this.validateGetMenteesResponse(response)){
                         this.setMentees(response.data)
                     }
                 });

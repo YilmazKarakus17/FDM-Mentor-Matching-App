@@ -1,8 +1,23 @@
-/* Default css style for landing page buttons and their icons */
+/* Styling the main landing page container */
+#landing-page{
+    margin-top: 5em;
+    margin-bottom: 1em;
+}
+
+/* Making the top margin of the main landing page container responsive */
+@media only screen and (max-width: 2200px){
+    #landing-page{
+        margin-top: 5em;
+        margin-bottom: 1em;
+    }
+}
+/* Default css style for landing page buttons and their image icons */
 .landing-page-buttons{
     margin-left: 15em;
+    margin-bottom: 5em;
     background-color: transparent;
     padding: 0% 0%;
+    border: 2px solid #343A40;
 }
 
 .button-icons{
@@ -16,7 +31,18 @@
     opacity: 0.75;
 }
 
-/* Making the margin responsive */
+/* Styling the landing page button headings */
+#landing-page .button-headings{
+    font-size: 2em;
+}
+/* Making the landing page button headings responsive */
+@media only screen and (max-width: 1500px){
+    #landing-page .button-headings{
+        font-size: 1.5em;
+    }
+}
+
+/* Making the margin of landing page buttons responsive */
 @media only screen and (max-width: 2200px){
     .landing-page-buttons{
         margin-left: 10em;
@@ -75,23 +101,25 @@
     margin-left: 85vw;
     background: transparent;
     border: none;
-    color: darkblue;
-    font-weight: 500;
+    font-size: 1em;
+    color: #343A40;
+    font-weight: 700;
 }
 
 #technician-login:hover{
-    font-weight: 750;
+    color: #27282b;
+    font-weight: 800;
 }
 
-/* Making technician button responsive */
-@media only screen and (max-width:1000px){
+/* Making technician buttons responsive */
+@media only screen and (max-width:1025px){
     #technician-login{
         min-width: 25vw;
         margin-left: 75vw;
     }
 }
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 700px){
     #technician-login{
         min-width: 33.33vw;
         margin-left: 66.66vw;
