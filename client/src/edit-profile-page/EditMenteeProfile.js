@@ -56,102 +56,42 @@ export default class EditMenteeProfile extends React.Component{
         return true;
     }
 
-    //Function does a api request to update the firstname attribute of the mentee
-    async updateFirstName(firstname){
-        const response = await Axios.put('http://localhost:3001/api/update/mentee/firstname',{ firstname: firstname, fdmEmail: this.state.fdmEmail});
-        return await response
-    }
-
-    //Function does a api request to update the lastname attribute of the mentee
-    async updateLastName(lastname){
-        const response = await Axios.put('http://localhost:3001/api/update/mentee/lastname',{lastname: lastname, fdmEmail: this.state.fdmEmail});
-        return await response
-    }
-
-    //Function does a api request to update the email attribute of the mentee
-    async updateEmail(email){
-        const response = await Axios.put('http://localhost:3001/api/update/mentee/email',{email: email, fdmEmail: this.state.fdmEmail});
-        return await response
-    }
-
-    //Function does a api request to update the phone attribute of the mentee
-    async updatePhone(phone){
-        const response = await Axios.put('http://localhost:3001/api/update/mentee/phone',{phone: phone, fdmEmail: this.state.fdmEmail});
-        return await response
-    }
-
-    //Function does a api request to update the description attribute of the mentee
-    async updateDescription(description){
-        const response = await Axios.put('http://localhost:3001/api/update/mentee/description',{description: description, fdmEmail: this.state.fdmEmail});
-        return await response
-    }
-
-    /* Method which attempts to update the firstname if the user made any changes to their last name, 
-        then regardless of whether the user had made a change to the firstname it calls the updateLastNameOnwards method */
-    updateFirstNameOnwards(updatedAccountDetails,originalAccountDetails){
-        if(updatedAccountDetails.firstname != originalAccountDetails.firstname){
-            this.updateFirstName(updatedAccountDetails.firstname).then((response) => {
-                if (this.validateResponse(response)){
-                    this.updateLastNameOnwards(updatedAccountDetails,originalAccountDetails);
-                }
-            });
+    //Returns true if a change has been made
+    detailsHaveChanged = (originalAccountDetails,updatedAccountDetails) => {
+        if (updatedAccountDetails.firstname != originalAccountDetails.firstname){
+            return true;
         }
-        else{
-            this.updateLastNameOnwards(updatedAccountDetails,originalAccountDetails);
+        if (updatedAccountDetails.lastname != originalAccountDetails.lastname){
+            return true;
         }
+        if (updatedAccountDetails.email != originalAccountDetails.email){
+            return true;
+        }
+        if (updatedAccountDetails.phone != originalAccountDetails.phone){
+            return true;
+        }
+        if (updatedAccountDetails.description != originalAccountDetails.description){
+            return true;
+        }
+        return false;
     }
 
-    /* Method which attempts to update the lastname if the user made any changes to their last name, 
-        then regardless of whether the user had made a change to the last name it calls the updateEmailOnwards method */
-    updateLastNameOnwards(updatedAccountDetails,originalAccountDetails){
-        if(updatedAccountDetails.lastname != originalAccountDetails.lastname){
-            this.updateLastName(updatedAccountDetails.lastname).then((response) => {
-                if (this.validateResponse(response)){
-                    this.updateEmailOnwards(updatedAccountDetails,originalAccountDetails);
-                }
-            });
-        }
-        else{
-            this.updateEmailOnwards(updatedAccountDetails,originalAccountDetails);
-        }
-    }
-
-    /* Method which attempts to update the email if the user made any changes to their last name, 
-        then regardless of whether the user had made a change to the email it calls the updatePhoneOnwards method */
-    updateEmailOnwards(updatedAccountDetails,originalAccountDetails){
-        if(updatedAccountDetails.email != originalAccountDetails.email){
-            this.updateEmail(updatedAccountDetails.email).then((response) => {
-                if (this.validateResponse(response)){
-                    this.updatePhoneOnwards(updatedAccountDetails,originalAccountDetails);
-                }
-            });
-        }
-        else{
-            this.updatePhoneOnwards(updatedAccountDetails,originalAccountDetails);
-        }
-    }
-
-    /* Method which attempts to update the phone if the user made any changes to their last name, 
-        then regardless of whether the user had made a change to the phone it calls the updateDescriptionOnwards method */
-    updatePhoneOnwards(updatedAccountDetails,originalAccountDetails){
-        if(updatedAccountDetails.phone != originalAccountDetails.phone){
-            this.updatePhone(updatedAccountDetails.phone).then((response) => {
-                if (this.validateResponse(response)){
-                    this.updateDescriptionOnwards(updatedAccountDetails,originalAccountDetails);
-                }
-            });
-        }
-        else{
-            this.updateDescriptionOnwards(updatedAccountDetails,originalAccountDetails);
-        }
-    }
-
-    /* Method which attempts to update the description if the user made any changes to their last name, 
-        then regardless of whether the user had made a change to the description it calls the parent components reloadContent method */
-        updateDescriptionOnwards(updatedAccountDetails,originalAccountDetails){
-            if(updatedAccountDetails.description != originalAccountDetails.description){
-                this.updateDescription(updatedAccountDetails.description).then((response) => {
-                    if (this.validateResponse(response)){
+    //Event handler for the button used to submit the new profile details if a change has happened
+    submitEventHandler = () => {
+        let updatedAccountDetails = this.getUpdatedAccountDetails();
+        let originalAccountDetails = this.getOriginaldAccountDetails();
+        let validator = new EditProfilePageValidator(updatedAccountDetails, document.getElementById('error-msg'));
+        if(validator.validate()){
+            if(this.detailsHaveChanged(originalAccountDetails,updatedAccountDetails)){
+                Axios.put('http://localhost:3001/api/update/mentee/details',{
+                    firstname: updatedAccountDetails.firstname,
+                    lastname: updatedAccountDetails.lastname,
+                    email: updatedAccountDetails.email,
+                    phone: updatedAccountDetails.phone,
+                    description: updatedAccountDetails.description,
+                    fdmEmail: this.state.fdmEmail
+                }).then((response) => {
+                    if(this.validateResponse(response)){
                         this.state.reloadContent();
                     }
                 });
@@ -159,14 +99,6 @@ export default class EditMenteeProfile extends React.Component{
             else{
                 this.state.reloadContent();
             }
-        }
-
-    submitHandler = () => {
-        let updatedAccountDetails = this.getUpdatedAccountDetails();
-        let originalAccountDetails = this.getOriginaldAccountDetails();
-        let validator = new EditProfilePageValidator(updatedAccountDetails, document.getElementById('error-msg'));
-        if(validator.validate()){
-            this.updateFirstNameOnwards(updatedAccountDetails,originalAccountDetails);
         }
     }
 
@@ -208,7 +140,7 @@ export default class EditMenteeProfile extends React.Component{
                 <div className="row">
                     <div className="col-12">
                         <button className="btn btn-primary col-6" onClick={this.state.reloadContent}>Back</button>
-                        <button className="btn btn-primary col-6" onClick={this.submitHandler}>Done</button>
+                        <button className="btn btn-primary col-6" onClick={this.submitEventHandler}>Done</button>
                     </div>
                 </div>
             </div>

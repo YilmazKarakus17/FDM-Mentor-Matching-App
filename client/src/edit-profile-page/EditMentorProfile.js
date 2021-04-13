@@ -56,23 +56,49 @@ export default class EditMentorProfile extends React.Component{
         return true;
     }
 
+    //Returns true if a change has been made
+    detailsHaveChanged = (originalAccountDetails,updatedAccountDetails) => {
+        if (updatedAccountDetails.firstname != originalAccountDetails.firstname){
+            return true;
+        }
+        if (updatedAccountDetails.lastname != originalAccountDetails.lastname){
+            return true;
+        }
+        if (updatedAccountDetails.email != originalAccountDetails.email){
+            return true;
+        }
+        if (updatedAccountDetails.phone != originalAccountDetails.phone){
+            return true;
+        }
+        if (updatedAccountDetails.description != originalAccountDetails.description){
+            return true;
+        }
+        return false;
+    }
+
+    //Event handler for the button used to submit the new profile details if a change has happened
     submitHandler = () => {
         let updatedAccountDetails = this.getUpdatedAccountDetails();
         let originalAccountDetails = this.getOriginaldAccountDetails();
         let validator = new EditProfilePageValidator(updatedAccountDetails, document.getElementById('error-msg'));
         if(validator.validate()){
-            Axios.put('http://localhost:3001/api/update/mentor/details',{
-                firstname: updatedAccountDetails.firstname,
-                lastname: updatedAccountDetails.lastname,
-                email: updatedAccountDetails.email,
-                phone: updatedAccountDetails.phone,
-                description: updatedAccountDetails.description,
-                fdmId: this.state.fdmId
-            }).then((response) => {
-                if(this.validateResponse(response)){
-                    this.state.reloadContent();
-                }
-            });
+            if(this.detailsHaveChanged(originalAccountDetails,updatedAccountDetails)){
+                Axios.put('http://localhost:3001/api/update/mentor/details',{
+                    firstname: updatedAccountDetails.firstname,
+                    lastname: updatedAccountDetails.lastname,
+                    email: updatedAccountDetails.email,
+                    phone: updatedAccountDetails.phone,
+                    description: updatedAccountDetails.description,
+                    fdmId: this.state.fdmId
+                }).then((response) => {
+                    if(this.validateResponse(response)){
+                        this.state.reloadContent();
+                    }
+                });
+            }
+            else{
+                this.state.reloadContent();
+            }
         }
     }
 
