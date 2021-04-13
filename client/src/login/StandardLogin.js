@@ -1,6 +1,14 @@
+//Importing React and it's modules
 import React from 'react';
-import './LoginPages.css';
+
+//Importing Axios in order to communicate with API
 import Axios from 'axios';
+
+//Importing Page Styling
+import './LoginPages.css';
+
+//Importing page validator
+import LoginPageValidator from './LoginPageValidator';
 
 export default class StandardLogin extends React.Component{
     constructor(props){
@@ -14,42 +22,46 @@ export default class StandardLogin extends React.Component{
         let uname = document.getElementById('username-input').value;
         let pwd = document.getElementById('pwd-input').value;
         let matched = false;
-
-        //checks if the username is a fdm email or a fdm id
-        if (uname.indexOf('@') === -1)
-        {
-            Axios.post('http://localhost:3001/api/get/mentor/credentials-check', {
-                id: uname.toString(),
-                pwd: pwd.toString()
-              }).then((response) => {
-                matched = response.data.match;
-                if (!matched) {document.getElementById('error-msg').innerHTML = "Sign in Failed: Incorrect Mentor Credentials"}
-                else {
-                    document.getElementById('error-msg').innerHTML = "";
-                    //Saving mentor credentials in local storage
-                    localStorage.setItem("id", uname.toString());
-                    localStorage.setItem("pwd", pwd.toString());
-                    localStorage.removeItem("fdmEmail"); // removing fdm email key-value pair
-                    this.state.loadPageContent();      
+        let validator = new LoginPageValidator(document.getElementById('error-msg'));
+        if (validator.userNameExists(uname)){
+            if (validator.pwdExists(pwd)){
+                //checks if the username is a fdm email or a fdm id
+                if (validator.isEmail(uname))
+                {
+                    Axios.post('http://localhost:3001/api/get/mentor/credentials-check', {
+                        id: uname.toString(),
+                        pwd: pwd.toString()
+                    }).then((response) => {
+                        matched = response.data.match;
+                        if (!matched) {document.getElementById('error-msg').innerHTML = "Sign in Failed: Incorrect Mentor Credentials"}
+                        else {
+                            document.getElementById('error-msg').innerHTML = "";
+                            //Saving mentor credentials in local storage
+                            localStorage.setItem("id", uname.toString());
+                            localStorage.setItem("pwd", pwd.toString());
+                            localStorage.removeItem("fdmEmail"); // removing fdm email key-value pair
+                            this.state.loadPageContent();      
+                        }
+                    });       
                 }
-              });       
-        }
-        else{
-            Axios.post('http://localhost:3001/api/get/mentee/credentials-check', {
-                fdmEmail: uname.toString(),
-                pwd: pwd.toString()
-              }).then((response) => {
-                matched = response.data.match;
-                if (!matched) {document.getElementById('error-msg').innerHTML = "Sign in Failed: Incorrect Mentee Credentials"}
-                else {
-                    document.getElementById('error-msg').innerHTML = "";
-                    //Saving mentee credentials in local storage
-                    localStorage.setItem("fdmEmail", uname.toString());
-                    localStorage.setItem("pwd", pwd.toString());
-                    localStorage.removeItem("id"); // removing the fdm id key-value pair
-                    this.state.loadPageContent();
+                else{
+                    Axios.post('http://localhost:3001/api/get/mentee/credentials-check', {
+                        fdmEmail: uname.toString(),
+                        pwd: pwd.toString()
+                    }).then((response) => {
+                        matched = response.data.match;
+                        if (!matched) {document.getElementById('error-msg').innerHTML = "Sign in Failed: Incorrect Mentee Credentials"}
+                        else {
+                            document.getElementById('error-msg').innerHTML = "";
+                            //Saving mentee credentials in local storage
+                            localStorage.setItem("fdmEmail", uname.toString());
+                            localStorage.setItem("pwd", pwd.toString());
+                            localStorage.removeItem("id"); // removing the fdm id key-value pair
+                            this.state.loadPageContent();
+                        }
+                    });  
                 }
-              });  
+            }
         }
     }
 

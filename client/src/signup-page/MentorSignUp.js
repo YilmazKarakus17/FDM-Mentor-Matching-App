@@ -288,8 +288,6 @@ export default class MentorSignUp extends Component {
                             
                           }).then((response) =>{
                             document.getElementById('error-db').innerHTML = "";
-                            localStorage.setItem("id", idInput);
-                            localStorage.setItem("pwd", pwdInput);
                             document.getElementById('success-msg').innerHTML = "You Have Successfully Applied! A technician will view your application and respond via email"
                           });
                       });                
