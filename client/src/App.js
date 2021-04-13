@@ -48,7 +48,7 @@ export default class App extends React.Component{
 
    //Method used to change the current page content to be the mentee signup page
    menteeSignUpRedirect = () => {
-    ReactDOM.render(<MenteeSignUp />, document.getElementById('page-content'));
+    ReactDOM.render(<MenteeSignUp loadPageContent={this.loadPageContent} />, document.getElementById('page-content'));
   }
 
   //Method used to change the current page content to be the mentor application page

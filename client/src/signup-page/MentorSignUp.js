@@ -252,6 +252,8 @@ export default class MentorSignUp extends Component {
                     return 
                   } else{
                       // post everything
+                      let idInput = document.getElementById('fdm_id').value;
+                      let pwdInput = document.getElementById('pwd').value;
                       Axios.post('http://localhost:3001/api/insert/mentor-application',{
                         id: document.getElementById('fdm_id').value,
                         pwd: document.getElementById('pwd').value,
@@ -262,8 +264,6 @@ export default class MentorSignUp extends Component {
                         email: document.getElementById('email').value,
                         phone: document.getElementById('phone').value,
                       }).then((response) =>{
-                              console.log(response);
-                              // areas of expertise
                             Axios.post('http://localhost:3001/api/insert/areas-of-expertise/fk=applicant', {
                               id: document.getElementById('fdm_id').value,
                               comm:  dict['comm'] ,
@@ -288,7 +288,9 @@ export default class MentorSignUp extends Component {
                             
                           }).then((response) =>{
                             document.getElementById('error-db').innerHTML = "";
-                            console.log(response);
+                            localStorage.setItem("id", idInput);
+                            localStorage.setItem("pwd", pwdInput);
+                            document.getElementById('success-msg').innerHTML = "You Have Successfully Applied! A technician will view your application and respond via email"
                           });
                       });                
                   }
@@ -374,8 +376,6 @@ export default class MentorSignUp extends Component {
         <div className="row">
           <small id="error-soft" className="col-12 form-text text-danger"></small>
         </div>
-
-
         <div className="row">
           <h5 className="col-12">Choose two different hard skills that you are an expert in:</h5>
         </div>
@@ -392,8 +392,6 @@ export default class MentorSignUp extends Component {
         <div className="row">
           <small id="error-hard" className="col-12 form-text text-danger"></small>
         </div>
-
-
         <div className="row">
           <h5 className="col-12">Choose two different departments skills that apply to you:</h5>
         </div>
@@ -407,16 +405,15 @@ export default class MentorSignUp extends Component {
             <Select value={selectedOption7} onChange={this.handleChange7} id="changed7" options={options3} />
           </div>
         </div>
-
         <div className="row">
           <small id="error-dep" className="col-12 form-text text-danger"></small>
         </div>
-
         <div className="row">
           <small id="error-db" className="col-12 form-text text-danger"></small>
         </div>
-
-
+        <div className="row">
+          <small id="success-msg" className="col-12 form-text text-success"></small>
+        </div>
         <div className="row">
           <div className="col-12">
             <button className="btn btn-primary" onClick={() => this.submitEventHandler()}>Submit Application</button>

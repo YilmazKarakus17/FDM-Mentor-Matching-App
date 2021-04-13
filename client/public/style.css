@@ -3,3 +3,17 @@ html, body{
     background-size: 100% 100%;
     padding-bottom: 2em;
 }
+
+.text-danger{
+    width: 100%;
+    text-align: center;
+    font-size: medium;
+    padding-bottom: 2%;
+}
+
+.text-success{
+    width: 100%;
+    text-align: center;
+    font-size: medium;
+    padding-bottom: 2%;
+}

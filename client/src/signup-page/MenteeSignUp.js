@@ -73,6 +73,7 @@ export default class MentorSignUp extends Component {
   constructor(props) {
       super(props);
       this.state = {
+        loadPageContent: this.props.loadPageContent,
         variable: ''
       };
     }
@@ -231,6 +232,8 @@ export default class MentorSignUp extends Component {
             {
               //post everything
               //post everything
+              let fdmEmailInput = document.getElementById('fdm_id').value;
+              let pwdInput = document.getElementById('pwd').value;
               Axios.post('http://localhost:3001/api/insert/mentee',{
                 fdmEmail: document.getElementById('fdm_id').value,
                 pwd: document.getElementById('pwd').value,
@@ -265,7 +268,10 @@ export default class MentorSignUp extends Component {
                       auto: dict['auto'], 
                     
                   }).then((response) =>{
-                    document.getElementById('error-db').innerHTML = "Sign up successful! Thank you for your time."
+                    document.getElementById('error-db').innerHTML = "";
+                    localStorage.setItem("fdmEmail", fdmEmailInput);
+                    localStorage.setItem("pwd", pwdInput);
+                    this.state.loadPageContent();
                   });
                 });      
             }

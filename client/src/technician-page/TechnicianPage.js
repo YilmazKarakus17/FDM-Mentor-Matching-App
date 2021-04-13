@@ -12,7 +12,7 @@ function TechnicianPage () {
         answer: ""
     };
 
-    emailjs.init("user_X04GI2ZgYrP5SyzVfqI16");
+    emailjs.init("user_rjAAmkIzDLYJXamqkEohK");
 
     useEffect(() => {
         axios.get('http://localhost:3001/api/get/applicants/interval=5').then((response) => {
@@ -71,7 +71,7 @@ function TechnicianPage () {
         templateParams.to_email = email
         templateParams.answer = answer
         templateParams.to_name = firstname
-        emailjs.send("service_rpod9x5", "template_pi70ohu", templateParams).then(
+        emailjs.send("service_hokbz1u", "template_8573tad", templateParams).then(
             function (response) {
               window.location.reload();   
             },
