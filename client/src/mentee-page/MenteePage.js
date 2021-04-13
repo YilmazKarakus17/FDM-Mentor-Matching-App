@@ -1,11 +1,13 @@
 //Importing React and React based modules
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 //Importing Axios for communicating with the server
 import Axios from 'axios';
 
 //Importing Child Components
 import SearchMentor from './SearchMentor'
+import EditMenteeProfile from '../edit-profile-page/EditMenteeProfile';
 
 //Importing styling
 import './MenteePage.css'
@@ -21,6 +23,7 @@ export default class MenteePage extends React.Component{
             phone: "",
             desc: "",
             hasMentor: false,
+            pageLoadedSuccessfully: false,
             mentor: {}
         }
     }
@@ -30,7 +33,6 @@ export default class MenteePage extends React.Component{
         this.setState({
             mentor: mentor
         });
-        console.log(this.state.mentor)
     }
 
     //setter method used to set the details of the mentee
@@ -44,6 +46,15 @@ export default class MenteePage extends React.Component{
         });
     }
 
+    //Renders edit profile page content in the account-details-content div
+    editProfile = () => {
+        ReactDOM.render(
+                <EditMenteeProfile reloadContent={this.reloadContent} 
+                    fdmEmail={this.state.fdmEmail} firstname={this.state.firstName} lastname={this.state.lastName}
+                    email={this.state.email} phone={this.state.phone} description={this.state.desc} />, 
+            document.getElementById('account-details-content'));
+    }
+
     //Function returns true if the API response confirms the request was successful
     validateResponse = (response) => {
         if (response.data.code === "ECONNREFUSED"){
@@ -52,10 +63,12 @@ export default class MenteePage extends React.Component{
         }
         if (response.data.length == 0){
             alert("Unable to load mentee details: fdm Email doesn't exist in the database")
+            return false;
         }
         return true;
     }
 
+    //Reloads the page
     reloadContent = () =>{
         window.location.reload();
     }
@@ -69,7 +82,8 @@ export default class MenteePage extends React.Component{
                     Axios.get(`http://localhost:3001/api/get/mentor/exclude=pwd/${this.state.fdmEmail}`).then((response) => {
                         if (this.validateResponse(response)){
                             this.setState({
-                                hasMentor: true
+                                hasMentor: true,
+                                pageLoadedSuccessfully: true
                             }); 
                             this.setMentor(response.data[0])
                         }
@@ -114,6 +128,15 @@ export default class MenteePage extends React.Component{
             pageContent = 
                 <SearchMentor reloadContent={this.reloadContent} fdmEmail={this.state.fdmEmail} />
         }
+
+        let editProfileBtn;
+        if (this.state.pageLoadedSuccessfully){
+            editProfileBtn = 
+            <button className="btn btn-primary" onClick={this.editProfile}>Edit Profile</button>
+        }
+        else{
+            editProfileBtn = <div className="col-12">Page needs to load successfully</div>
+        }
         return(
             <div id="mentee-page-content" className="container">
                 <div className="row">
@@ -149,6 +172,11 @@ export default class MenteePage extends React.Component{
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
+                                {editProfileBtn}
+                            </div>
                         </div>
                     </div>
                 </div>

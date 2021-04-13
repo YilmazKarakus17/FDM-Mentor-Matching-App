@@ -40,7 +40,7 @@ app.get('/', (req,res) => {
     });
 
     //Creating the mentor table
-    sql = 'CREATE TABLE mentor(fdm_id VARCHAR(255) NOT NULL PRIMARY KEY, pwd VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, img VARCHAR(500) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(50) NOT NULL)';
+    sql = 'CREATE TABLE mentor(fdm_id VARCHAR(255) NOT NULL PRIMARY KEY, pwd VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, description VARCHAR(500) NOT NULL, img VARCHAR(500) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(50) NOT NULL)';
     conn.query(sql, (err, result) => {
         if(err) throw err;
         
@@ -48,7 +48,7 @@ app.get('/', (req,res) => {
     });
 
     //Creating the Mentee table
-    sql = 'CREATE TABLE mentee(fdm_email VARCHAR(255) NOT NULL PRIMARY KEY, pwd VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, img VARCHAR(1000) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(50) NOT NULL, mentor_id VARCHAR(255),  FOREIGN KEY (mentor_id) REFERENCES mentor(fdm_id) ON DELETE SET NULL)';
+    sql = 'CREATE TABLE mentee(fdm_email VARCHAR(255) NOT NULL PRIMARY KEY, pwd VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, description VARCHAR(500) NOT NULL, img VARCHAR(1000) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(50) NOT NULL, mentor_id VARCHAR(255),  FOREIGN KEY (mentor_id) REFERENCES mentor(fdm_id) ON DELETE SET NULL)';
     conn.query(sql, (err, result) => {
         if(err) throw err;
         

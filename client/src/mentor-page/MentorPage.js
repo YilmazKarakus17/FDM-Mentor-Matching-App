@@ -1,8 +1,12 @@
 //Importing React and React based modules
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 //Importing Axios for communicating with the server
 import Axios from 'axios';
+
+//Importing Child Components
+import EditMentorProfile from '../edit-profile-page/EditMentorProfile';
 
 //Importing the styling
 import './MentorPage.css'
@@ -17,6 +21,7 @@ export default class MentorPage extends React.Component{
             email: "",
             phone: "",
             desc: "",
+            pageLoadedSuccessfully: false,
             mentees: []
         }
     }
@@ -46,7 +51,8 @@ export default class MentorPage extends React.Component{
             return false;
         }
         if (response.data.length == 0){
-            alert("Unable to load mentor details: fdm id doesn't exist in the database")
+            alert("Unable to load mentor details: fdm id doesn't exist in the database");
+            return false;
         }
         return true;
     }
@@ -60,12 +66,29 @@ export default class MentorPage extends React.Component{
         return true;
     }
 
+    //Renders edit profile page content in the account-details-content div
+    editProfile = () => {
+        ReactDOM.render(
+                <EditMentorProfile reloadContent={this.reloadContent} 
+                    fdmId={this.state.fdmId} firstname={this.state.firstName} lastname={this.state.lastName}
+                    email={this.state.email} phone={this.state.phone} description={this.state.desc} />, 
+            document.getElementById('account-details-content'));
+    }
+
+    //Reloads the page
+    reloadContent = () =>{
+        window.location.reload();
+    }
+
     componentWillMount(){
         Axios.get(`http://localhost:3001/api/get/mentor/${this.state.fdmId}`).then((response) => {
             if (this.validateGetMentorResponse(response)){
                 this.setMentorDetails(response.data[0])
                 Axios.get(`http://localhost:3001/api/get/mentor/mentees/${this.state.fdmId}`).then((response) => {
                     if (this.validateGetMenteesResponse(response)){
+                        this.setState({
+                            pageLoadedSuccessfully: true
+                        }); 
                         this.setMentees(response.data)
                     }
                 });
@@ -74,6 +97,14 @@ export default class MentorPage extends React.Component{
     }
 
     render(){
+        let editProfileBtn;
+        if (this.state.pageLoadedSuccessfully){
+            editProfileBtn = 
+            <button className="btn btn-primary" onClick={this.editProfile}>Edit Profile</button>
+        }
+        else{
+            editProfileBtn = <div className="col-12">Page needs to load successfully</div>
+        }
         return(
             <div id="mentor-page-content" className="container">
                 <div className="row">
@@ -109,6 +140,11 @@ export default class MentorPage extends React.Component{
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
+                                {editProfileBtn}
+                            </div>
                         </div>
                     </div>
                 </div>
