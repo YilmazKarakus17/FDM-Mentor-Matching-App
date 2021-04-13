@@ -26,7 +26,7 @@ export default class EditProfilePageValidator{
             this.errMsgElement.innerHTML = "Please enter a email!";
             return false;
         }
-        if(this.chngdAccountDetails.lastname.length > 200){
+        if(this.chngdAccountDetails.email.length > 200){
             this.errMsgElement.innerHTML = "Email too large, our database limits to the storage of maximum 200 characters!";
             return false;
         }
