@@ -82,13 +82,15 @@ export default class MenteePage extends React.Component{
                     Axios.get(`http://localhost:3001/api/get/mentor/exclude=pwd/${this.state.fdmEmail}`).then((response) => {
                         if (this.validateResponse(response)){
                             this.setState({
-                                hasMentor: true,
-                                pageLoadedSuccessfully: true
+                                hasMentor: true
                             }); 
                             this.setMentor(response.data[0])
                         }
                     });
                 }
+                this.setState({
+                    pageLoadedSuccessfully: true
+                }); 
             }
           });
     }
