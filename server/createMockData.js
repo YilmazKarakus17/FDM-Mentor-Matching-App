@@ -58,25 +58,46 @@ app.get('/fdmEmails', (req,res) => {
 app.get('/mentor', async (req,res) => {
     let pwd = "12345678"
     let hashedPwd = await bcyrpt.hash(pwd, saltRounds);
-    let sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm1',?,'john','smith','I am a software engineer but I have also worked as a software developer so if you want I can check over your code and improve your programming skills','johnsmithsPic.png','johnsmith@outlook.com','07287773714')";
+    let sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm1',?,'John','Smith','I am a software engineer but I have also worked as a software developer so if you want I can check over your code and improve your programming skills. I can also help you become a much better communicator.','johnsmithsPic.png','johnsmith@outlook.com','07287773714')";
     conn.query(sqlInsert, hashedPwd, (err, result) =>{
         if (err) throw err;
     });
 
     pwd = "87654321"
     hashedPwd = await bcyrpt.hash(pwd, saltRounds);
-    sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm2',?,'jeff','smith','I am a test engineer looking to help anyone with their organisational skills','jeffsPic.png','jeffsmith@outlook.com','07335858177')";
+    sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm2',?,'Jeff','Smith','I am a test engineer looking to help anyone with their organisational skills and testing skills. I can teach you both the fundamentals and advanced testing concepts used in the industry.','jeffsPic.png','jeffsmith@outlook.com','07335858177')";
     conn.query(sqlInsert, hashedPwd, (err, result) =>{
         if (err) throw err;
     });
 
     pwd = "12344321"
     hashedPwd = await bcyrpt.hash(pwd, saltRounds);
-    sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm3',?,'Olivia','Johnson','I am a consultant, who can really help you with your communication skills','oliviaPic.png','OliviaJohnson2107@outlook.com','07318678746')";
+    sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm3',?,'Olivia','Johnson','As a consultant with experience in IT, banking, and much more, I have had the opportunity to improve my confidence and I want to share that with you.','oliviaPic.png','OliviaJohnson2107@outlook.com','07318678746')";
+    conn.query(sqlInsert, hashedPwd, (err, result) =>{
+        if (err) throw err;
+    });
+    
+    pwd = "11112222"
+    hashedPwd = await bcyrpt.hash(pwd, saltRounds);
+    sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm8',?,'James','Jackson','Through my experiences as a HR representative and a recruiter for FDM, I can give you advice in areas to improve on as well as teach you important leadership skills','JamesJackson.png','JamesJackson07@gmail.com','07318678745')";
+    conn.query(sqlInsert, hashedPwd, (err, result) =>{
+        if (err) throw err;
+    });
+
+    pwd = "12345678"
+    hashedPwd = await bcyrpt.hash(pwd, saltRounds);
+    sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm9',?,'Ronald','MD','I have working in information technology industry for over 25 years and have had experience as a consultant for FDM. I am really attentive to my mentees.','RonaldMD.png','RonaldBusinessEmail01@hotmail.com','07318669445')";
+    conn.query(sqlInsert, hashedPwd, (err, result) =>{
+        if (err) throw err;
+    });
+
+    pwd = "12345678"
+    hashedPwd = await bcyrpt.hash(pwd, saltRounds);
+    sqlInsert = "INSERT INTO mentor (fdm_id, pwd, firstname, lastname, description, img, email, phone) VALUES ('fdm10',?,'Stevey','Nokia','I am a hard working guy. I will do everything in my power to help you in any way. With 15 years of epxerience in business intelligence and programming, I like to think I have the ability to mentor the next generation of consultants.','steve.png','steve456@gmail.com','07318669433')";
     conn.query(sqlInsert, hashedPwd, (err, result) =>{
         if (err) throw err;   
         res.send("Mentors Inserted - check your table")
-    });    
+    });
 });
 
 //Defining the route that creates the mentee data
@@ -172,6 +193,18 @@ app.get('/areasOfExpertise', (req,res) => {
         if (err) throw err;
     });
     sqlInsert = "INSERT INTO areas_of_expertise (mentor_id, application_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation) VALUES ('fdm3',NULL,1,1,0,1,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0)";
+    conn.query(sqlInsert, (err, result) =>{
+        if (err) throw err;
+    });
+    sqlInsert = "INSERT INTO areas_of_expertise (mentor_id, application_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation) VALUES ('fdm8',NULL,0,1,0,1,1,0,0,0,1,0,1,0,0,0,0,1,0,1,0)";
+    conn.query(sqlInsert, (err, result) =>{
+        if (err) throw err;
+    });
+    sqlInsert = "INSERT INTO areas_of_expertise (mentor_id, application_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation) VALUES ('fdm9',NULL,0,1,0,0,1,1,0,0,0,0,0,0,0,1,1,1,0,1,0)";
+    conn.query(sqlInsert, (err, result) =>{
+        if (err) throw err;
+    });
+    sqlInsert = "INSERT INTO areas_of_expertise (mentor_id, application_id, communication, confidence, time_management, teamwork, leadership, organisation, cloud_computing, sales, recruitment, marketing, hr, finance, academy, information_technology, consultant,programming, software_testing, business_intelligence, automation) VALUES ('fdm10',NULL,1,0,1,1,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0)";
     conn.query(sqlInsert, (err, result) =>{
         if (err) throw err;
     });
