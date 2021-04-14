@@ -28,23 +28,6 @@ export default class StandardLogin extends React.Component{
                 //checks if the username is a fdm email or a fdm id
                 if (validator.isEmail(uname))
                 {
-                    Axios.post('http://localhost:3001/api/get/mentor/credentials-check', {
-                        id: uname.toString(),
-                        pwd: pwd.toString()
-                    }).then((response) => {
-                        matched = response.data.match;
-                        if (!matched) {document.getElementById('error-msg').innerHTML = "Sign in Failed: Incorrect Mentor Credentials"}
-                        else {
-                            document.getElementById('error-msg').innerHTML = "";
-                            //Saving mentor credentials in local storage
-                            localStorage.setItem("id", uname.toString());
-                            localStorage.setItem("pwd", pwd.toString());
-                            localStorage.removeItem("fdmEmail"); // removing fdm email key-value pair
-                            this.state.loadPageContent();      
-                        }
-                    });       
-                }
-                else{
                     Axios.post('http://localhost:3001/api/get/mentee/credentials-check', {
                         fdmEmail: uname.toString(),
                         pwd: pwd.toString()
@@ -58,6 +41,23 @@ export default class StandardLogin extends React.Component{
                             localStorage.setItem("pwd", pwd.toString());
                             localStorage.removeItem("id"); // removing the fdm id key-value pair
                             this.state.loadPageContent();
+                        }
+                    });
+                }
+                else{
+                    Axios.post('http://localhost:3001/api/get/mentor/credentials-check', {
+                        id: uname.toString(),
+                        pwd: pwd.toString()
+                    }).then((response) => {
+                        matched = response.data.match;
+                        if (!matched) {document.getElementById('error-msg').innerHTML = "Sign in Failed: Incorrect Mentor Credentials"}
+                        else {
+                            document.getElementById('error-msg').innerHTML = "";
+                            //Saving mentor credentials in local storage
+                            localStorage.setItem("id", uname.toString());
+                            localStorage.setItem("pwd", pwd.toString());
+                            localStorage.removeItem("fdmEmail"); // removing fdm email key-value pair
+                            this.state.loadPageContent();      
                         }
                     });  
                 }
