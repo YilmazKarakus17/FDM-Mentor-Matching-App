@@ -38,7 +38,7 @@ export default class EditProfilePageValidator{
             this.errMsgElement.innerHTML = "Please enter a phone number please!";
             return false;
         }
-        if(!this.chngdAccountDetails.phone.length > 40){
+        if(this.chngdAccountDetails.phone.length > 40){
             this.errMsgElement.innerHTML = "Phone number must be less than 40 characters!";
             return false;
         }
