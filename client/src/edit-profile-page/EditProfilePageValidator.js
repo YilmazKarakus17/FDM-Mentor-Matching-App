@@ -51,7 +51,7 @@ export default class EditProfilePageValidator{
             return false;
         }
         if(this.chngdAccountDetails.description.length < 20 || this.chngdAccountDetails.description.length > 400){
-            this.errMsgElement.innerHTML = "Please enter a description of 20-450 characters (~ max 85 words)!";
+            this.errMsgElement.innerHTML = "Please enter a description of 20-400 characters (~ max 85 words)!";
             return false;
         }
         this.errMsgElement.innerHTML = "";
