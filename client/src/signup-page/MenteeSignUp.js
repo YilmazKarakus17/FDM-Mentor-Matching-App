@@ -196,15 +196,16 @@ export default class MentorSignUp extends Component {
       document.getElementById('error-desc').innerHTML = "Error: Description requires minimum 20 characters"
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
-    } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || this.choice3 == this.choice4){
+    } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || 
+      this.choice3 == this.choice4  || this.choice3==null || this.choice4==null || this.choice1==null){
       document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
-    } else if(this.choice2 == this.choice5){
+    } else if(this.choice2 == this.choice5 || this.choice2==null || this.choice5==null){
       document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
-    } else if(this.choice6 == this.choice7){
+    } else if(this.choice6 == this.choice7 || this.choice6==null || this.choice7==null){
       document.getElementById('error-dep').innerHTML = "Error: Choices are not different! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
