@@ -50,7 +50,7 @@ export default class EditProfilePageValidator{
             this.errMsgElement.innerHTML = "Please enter a description!";
             return false;
         }
-        if(this.chngdAccountDetails.description.length < 20 || this.chngdAccountDetails.description.length > 255){
+        if(this.chngdAccountDetails.description.length < 20 || this.chngdAccountDetails.description.length > 400){
             this.errMsgElement.innerHTML = "Please enter a description of 20-450 characters (~ max 85 words)!";
             return false;
         }
