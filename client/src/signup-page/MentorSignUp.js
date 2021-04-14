@@ -207,17 +207,17 @@ export default class MentorSignUp extends Component {
     } else if(this.choice1 == this.choice3 ||this.choice1 == this.choice4 || 
       this.choice3 == this.choice4  || this.choice3==null || this.choice4==null || this.choice1==null){
       console.log("Choices are not different (soft)! Please check again.")
-      document.getElementById('error-soft').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-soft').innerHTML = "Error: Choices are not different or some are empty! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else if(this.choice2 == this.choice5 || this.choice2==null || this.choice5==null){
       console.log("Choices are not different (hard)! Please check again.")
-      document.getElementById('error-hard').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-hard').innerHTML = "Error: Choices are not different or some are empty! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else if(this.choice6 == this.choice7 || this.choice6==null || this.choice7==null){
       console.log("Choices are not different (dep)! Please check again.")
-      document.getElementById('error-dep').innerHTML = "Error: Choices are not different! Please check again."
+      document.getElementById('error-dep').innerHTML = "Error: Choices are not different or some are empty! Please check again."
       document.getElementById('error-db').innerHTML = "Sign up failed, please complete all fields."
       return 
     } else {
